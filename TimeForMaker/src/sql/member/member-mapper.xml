@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="loginMember">
+		SELERT *
+		FROM MEMBER
+		WHERE USER_ID = ?
+			AND USER_PWD = ?
+			AND USER_TYPE = 'Y'
+	</entry>
+
+
+
+
+</properties>
