@@ -8,6 +8,28 @@
 			AND USER_PWD = ?
 			AND USER_TYPE = 'Y'
 	</entry>
+	<entry key="insertMember">
+		INSERT INTO MEMBER(
+							USER_NICK,
+							USER_PWD,
+							USER_ID,
+							USER_PHONE,
+							USER_NAME
+							)
+		VALUES(
+				?,
+				?,
+				?,
+				?,
+				?		
+				)
+		
+	</entry>
+	<entry key="idCheck">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USER_ID = ?
+	</entry>
 
 
 

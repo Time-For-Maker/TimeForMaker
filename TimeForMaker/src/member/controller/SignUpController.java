@@ -1,29 +1,26 @@
 package member.controller;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import member.model.service.MemberService;
 import member.model.vo.Member;
 
 /**
- * Servlet implementation class LoginController
+ * Servlet implementation class SignUpController
  */
-@WebServlet("/login.me")
-public class LoginController extends HttpServlet {
+@WebServlet("/insert.me")
+public class SignUpController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginController() {
+    public SignUpController() {
         super();
     }
 
@@ -39,27 +36,25 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String userId = request.getParameter("userId");
+		String userNick = request.getParameter("userNick");
 		String userPwd = request.getParameter("userPwd");
+		String userId = request.getParameter("userId");
+		String userPhone = request.getParameter("userPhone");
+		String userName = request.getParameter("userName");
+
 		
-		Member loginUser = new MemberService().loginMember(userId, userPwd);
+		Member m = new Member(userNick, userPwd, userId, userPhone, userName);
 		
-		if(loginUser == null) {
-			request.setAttribute("errorMsg","로그인에 실패했습니다");
+		int result = new MemberService().isertMember(m);
 		
-			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
-			view.forward(request, response);
-		}else {
-			HttpSession session = request.getSession();
-			session.setAttribute("loginUser", loginUser);
-			session.setAttribute("alertMsg", "성공적으로 로그인이 되었습니다."); // 확인용 나중에 지워도 됨.
-			
-			response.sendRedirect(request.getContextPath());
+		if(result > 0) { // 성공
+			request.getSession().setAttribute("alertMsg", "회원가입에 성공했습니다.");
+//			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(request.getContextPath()+"/views/member/SignUpKeyword.jsp");
+		}else { //에러페이지로 포워딩
+			request.setAttribute("errorMsg","회원가입에 실패했습니다.");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-	
-	
-	
-	
 	}
 
 }

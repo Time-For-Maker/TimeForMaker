@@ -103,12 +103,12 @@
         	<% if(loginUser == null){ %>
             <form method="post" action="<%= request.getContextPath()%>/login.me" class="login-form">
                 <span style="font-size: 14px; font-weight: 600; display: block;">회원 아이디</span>
-                <input type="email" name="userId" placeholder="Email" class="user-login">
+                <input type="text" name="userId" placeholder="Email" class="user-login">
                 <span style="font-size: 14px; font-weight: 600; display: block;">비밀번호</span>
                 <input type="password" name="userPwd" placeholder="Password" class="user-login">
                 <span class="user-loginbtn">
                     <button type="button" class="user-backbtn" onclick="goMain();">뒤로</button>
-                    <input type="submit" value="로그인" class="user-gobtn">
+                    <button type="submit" class="user-gobtn">로그인</button>
                     <!-- <input type="submit" value="" -->
                 </span>
 
@@ -119,10 +119,6 @@
             	}
             </script>
             <% }else{ %>
-            	<div>
-            		<%= loginUser.getUserName() %>님 환영합니다.
-            	</div>
-            	  <!-- Start Script -->
 				  <script>
 				    location.href = "/TimeForMaker/views/common/main.jsp"; // 링크로 이동
 				  </script>

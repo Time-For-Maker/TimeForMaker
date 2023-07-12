@@ -133,7 +133,7 @@
 
           <!-- 회원가입 유도 버튼 시작-->
           <div class="membershipGuideWapper">
-              <span style="font-size: 13px; color: darkgrey; font-weight: 600;">아이디가 없으신가요? <a href="SignUpCondition.html" style="color: rgb(99, 99, 255); text-decoration-line: none; font-weight: 600 !important; font-size: 13px !important;" >회원가입</a>하기</span>
+              <span style="font-size: 13px; color: darkgrey; font-weight: 600;">아이디가 없으신가요? <a href="SignUpCondition.jsp" style="color: rgb(99, 99, 255); text-decoration-line: none; font-weight: 600 !important; font-size: 13px !important;" >회원가입</a>하기</span>
           </div>
            <!-- 회원가입 유도 버튼 끝-->
         </div>
