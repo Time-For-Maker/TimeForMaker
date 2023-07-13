@@ -104,6 +104,7 @@
             <form method="post" action="<%= request.getContextPath()%>/login.me" class="login-form">
                 <span style="font-size: 14px; font-weight: 600; display: block;">회원 아이디</span>
                 <input type="text" name="userId" placeholder="Email" class="user-login">
+                
                 <span style="font-size: 14px; font-weight: 600; display: block;">비밀번호</span>
                 <input type="password" name="userPwd" placeholder="Password" class="user-login">
                 <span class="user-loginbtn">

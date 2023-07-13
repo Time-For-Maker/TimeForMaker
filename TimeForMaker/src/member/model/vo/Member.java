@@ -9,7 +9,7 @@ public class Member {
 	private String 	userName; 		//USER_NAME
 	private String 	userPwd; 		//USER_PWD
 	private String 	userNick; 		//USER_NICK
-	private byte[] 	userImg; 		//USER_IMG
+//	private byte[] 	userImg; 		//USER_IMG
 	private String 	userPhone; 		//USER_PHONE
 	private Date   	userEnroll; 	//USER_ENROLL
 	private Date   	userModify; 	//USER_MODIFY
@@ -35,20 +35,15 @@ public class Member {
 	 * @param userType
 	 * @param managerType
 	 */
-	public Member(String userId, String userName, String userPwd, String userNick, byte[] userImg, String userPhone,
-			Date userEnroll, Date userModify, String userType, String managerType) {
-		super();
-		this.userId = userId;
-		this.userName = userName;
-		this.userPwd = userPwd;
-		this.userNick = userNick;
-		this.userImg = userImg;
-		this.userPhone = userPhone;
-		this.userEnroll = userEnroll;
-		this.userModify = userModify;
-		this.userType = userType;
-		this.managerType = managerType;
-	}
+	/*
+	 * public Member(String userId, String userName, String userPwd, String
+	 * userNick, byte[] userImg, String userPhone, Date userEnroll, Date userModify,
+	 * String userType, String managerType) { super(); this.userId = userId;
+	 * this.userName = userName; this.userPwd = userPwd; this.userNick = userNick;
+	 * this.userImg = userImg; this.userPhone = userPhone; this.userEnroll =
+	 * userEnroll; this.userModify = userModify; this.userType = userType;
+	 * this.managerType = managerType; }
+	 */
 	
 	
 	
@@ -80,23 +75,6 @@ public class Member {
 		this.managerType = managerType;
 	}
 
-
-	/**
-	 *  회원 가입용 생성자입니다. - ain 2023/07/11 -
-	 * @param userId
-	 * @param userName
-	 * @param userPwd
-	 * @param userNick
-	 * @param userPhone
-	 */
-//	public Member(String userId, String userName, String userPwd, String userNick, String userPhone) {
-//		super();
-//		this.userId = userId;
-//		this.userName = userName;
-//		this.userPwd = userPwd;
-//		this.userNick = userNick;
-//		this.userPhone = userPhone;
-//	}
 	
 	/**
 	 * 회원 가입용 생성자입니다. - ain 2023/07/11 -
@@ -114,25 +92,27 @@ public class Member {
 		this.userPhone = userPhone;
 		this.userName = userName;
 	}
+	
+	
 
 
 	/**
-	 *  마이페이지 내 정보 수정용 생성자 입니다 - ain 2023/07/11 -
+	 * 회원 정보 수정 구문입니다. - AIN 2023/07/13 -
 	 * @param userId
 	 * @param userName
 	 * @param userPwd
 	 * @param userNick
-	 * @param userImg
 	 * @param userPhone
+	 * @param userModify
 	 */
-	public Member(String userId, String userName, String userPwd, String userNick, byte[] userImg, String userPhone) {
+	public Member(String userId, String userName, String userPwd, String userNick, String userPhone, Date userModify) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
 		this.userPwd = userPwd;
 		this.userNick = userNick;
-		this.userImg = userImg;
 		this.userPhone = userPhone;
+		this.userModify = userModify;
 	}
 
 
@@ -176,14 +156,12 @@ public class Member {
 	}
 
 
-	public byte[] getUserImg() {
-		return userImg;
-	}
-
-
-	public void setUserImg(byte[] userImg) {
-		this.userImg = userImg;
-	}
+	/*
+	 * public byte[] getUserImg() { return userImg; }
+	 * 
+	 * 
+	 * public void setUserImg(byte[] userImg) { this.userImg = userImg; }
+	 */
 
 
 	public String getUserPhone() {
@@ -239,7 +217,7 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [userId=" + userId + ", userName=" + userName + ", userPwd=" + userPwd + ", userNick=" + userNick
-				+ ", userImg=" + Arrays.toString(userImg) + ", userPhone=" + userPhone + ", userEnroll=" + userEnroll
+				+ ", userImg=" /* + Arrays.toString(userImg) */ + ", userPhone=" + userPhone + ", userEnroll=" + userEnroll
 				+ ", userModify=" + userModify + ", userType=" + userType + ", managerType=" + managerType + "]";
 	}
 

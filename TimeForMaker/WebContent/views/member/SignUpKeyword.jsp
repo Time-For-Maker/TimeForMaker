@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% String contextPath = request.getContextPath(); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,9 +19,11 @@
   <!-- Load fonts style after rendering the layout styles -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
   <link rel="stylesheet" href="../../assets/css/fontawesome.min.css">
+  <!-- 깃허브 테스트중  -->
  
 </head>
 <body>
+
 
 	<script>
 		const msg = "<%= (String)session.getAttribute("alertMsg") %>";
@@ -61,7 +64,6 @@
             <div class="navbar align-self-center d-flex">
                 <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
                     <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                </a>
                 </a>
                 <a class="nav-icon position-relative text-decoration-none" href="#">
                     <i class="fa fa-fw fa-user text-dark mr-3"></i>
@@ -118,72 +120,64 @@
         <!-- 키워드 체크박스 전체 디브 시작-->
         <div class="user-login-keyword-wapper">
 
-          <form method="POST" action="form-action.html">
+          <form method="POST" action="<%= contextPath %>/userKeyword.me">
             <!-- 첫번쨰 대분류의 키워드 시작-->
             <div class="user-login-keyword-title">
-              <h6>키워드 대분류</h6>
+              <h6>핸드메이드</h6>
               
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key1" style="display: none;">
-                <label for="key1">일</label>
+                <input type="checkbox" id="key1" name="keyword" value="향수" style="display: none;">
+                <label for="key1">향수</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key2" style="display: none;">
-                <label for="key2">이</label>
+                <input type="checkbox" id="key2" name="keyword" value="비누" style="display: none;">
+                <label for="key2">비누</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key3" style="display: none;">
-                <label for="key3">삼</label>
+                <input type="checkbox" id="key3" name="keyword" value="캔들" style="display: none;">
+                <label for="key3">캔들</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key4" style="display: none;">
-                <label for="key4">사</label>
+                <input type="checkbox" id="key4" name="keyword" value="뜨개" style="display: none;">
+                <label for="key4">뜨개</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key5" style="display: none;">
-                <label for="key5">오</label>
-              </span>
-              <br>
-              <span class="user-login-keyword-box">
-                <input type="checkbox" id="key1" style="display: none;">
-                <label for="key1">일</label>
-              </span>
-              <span class="user-login-keyword-box">
-                <input type="checkbox" id="key2" style="display: none;">
-                <label for="key2">이</label>
-              </span>
-              <span class="user-login-keyword-box">
-                <input type="checkbox" id="key3" style="display: none;">
-                <label for="key3">삼</label>
-              </span>
-              <span class="user-login-keyword-box">
-                <input type="checkbox" id="key4" style="display: none;">
-                <label for="key4">사</label>
-              </span>
-              <span class="user-login-keyword-box">
-                <input type="checkbox" id="key5" style="display: none;">
-                <label for="key5">오</label>
+                <input type="checkbox" id="key5" name="keyword" value="라탄" style="display: none;">
+                <label for="key5">라탄</label>
               </span>
               <br>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key1" style="display: none;">
-                <label for="key1">일</label>
+                <input type="checkbox" id="key6" name="keyword" value="반지" style="display: none;">
+                <label for="key6">반지</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key2" style="display: none;">
-                <label for="key2">이</label>
+                <input type="checkbox" id="key7" name="keyword" value="도자기" style="display: none;">
+                <label for="key7">도자기</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key3" style="display: none;">
-                <label for="key3">삼</label>
+                <input type="checkbox" id="key8" name="keyword" value="위빙" style="display: none;">
+                <label for="key8">위빙</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key4" style="display: none;">
-                <label for="key4">사</label>
+                <input type="checkbox" id="key9" name="keyword" value="터프팅" style="display: none;">
+                <label for="key9">터프팅</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key5" style="display: none;">
-                <label for="key5">오</label>
+                <input type="checkbox" id="key10" name="keyword" value="가죽" style="display: none;">
+                <label for="key10">가죽</label>
+              </span>
+              <br>
+              <span class="user-login-keyword-box">
+                <input type="checkbox" id="key11" name="keyword" value="선캐쳐" style="display: none;">
+                <label for="key11">선캐쳐</label>
+              </span>
+              <span class="user-login-keyword-box">
+                <input type="checkbox" id="key12" name="keyword" value="목공" style="display: none;">
+                <label for="key12">목공</label>
+              </span>
+              <span class="user-login-keyword-box">
+                <input type="checkbox" id="key13" name="keyword" value="네온라이트" style="display: none;">
+                <label for="key13" style="font-size:10px !important;">네온라이트</label>
               </span>
 
             </div>
@@ -191,69 +185,53 @@
 
             <!-- 두번쨰 대분류의 키워드 시작-->
             <div class="user-login-keyword-title">
-              <h6>키워드 대분류</h6>
+              <h6>미술·요리</h6>
               
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key1" style="display: none;">
-                <label for="key1">일</label>
+                <input type="checkbox" id="key14" name="keyword" value="드로잉" style="display: none;">
+                <label for="key14">드로잉</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key2" style="display: none;">
-                <label for="key2">이</label>
+                <input type="checkbox" id="key15" name="keyword" value="수채화" style="display: none;">
+                <label for="key15">수채화</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key3" style="display: none;">
-                <label for="key3">삼</label>
+                <input type="checkbox" id="key16" name="keyword" value="일러스트" style="display: none;">
+                <label for="key16">일러스트</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key4" style="display: none;">
-                <label for="key4">사</label>
+                <input type="checkbox" id="key17" name="keyword" value="아크릴" style="display: none;">
+                <label for="key17">아크릴</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key5" style="display: none;">
-                <label for="key5">오</label>
-              </span>
-              <br>
-              <span class="user-login-keyword-box">
-                <input type="checkbox" id="key1" style="display: none;">
-                <label for="key1">일</label>
-              </span>
-              <span class="user-login-keyword-box">
-                <input type="checkbox" id="key2" style="display: none;">
-                <label for="key2">이</label>
-              </span>
-              <span class="user-login-keyword-box">
-                <input type="checkbox" id="key3" style="display: none;">
-                <label for="key3">삼</label>
-              </span>
-              <span class="user-login-keyword-box">
-                <input type="checkbox" id="key4" style="display: none;">
-                <label for="key4">사</label>
-              </span>
-              <span class="user-login-keyword-box">
-                <input type="checkbox" id="key5" style="display: none;">
-                <label for="key5">오</label>
+                <input type="checkbox" id="key18" name="keyword" value="디지털드로잉" style="display: none;">
+                <label for="key18" style="font-size:10px !important;">디지털드로잉</label>
               </span>
               <br>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key1" style="display: none;">
-                <label for="key1">일</label>
+                <input type="checkbox" id="key19" name="keyword" value="레진아트" style="display: none;">
+                <label for="key19">레진아트</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key2" style="display: none;">
-                <label for="key2">이</label>
+                <input type="checkbox" id="key20" name="keyword" value="타투" style="display: none;">
+                <label for="key20">타투</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key3" style="display: none;">
-                <label for="key3">삼</label>
+                <input type="checkbox" id="key21" name="keyword" value="베이킹" style="display: none;">
+                <label for="key21">베이킹</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key4" style="display: none;">
-                <label for="key4">사</label>
+                <input type="checkbox" id="key22" name="keyword" value="케이크" style="display: none;">
+                <label for="key22">케이크</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key5" style="display: none;">
-                <label for="key5">오</label>
+                <input type="checkbox" id="key23" name="keyword" value="요리" style="display: none;">
+                <label for="key23">요리</label>
+              </span>
+              <br>
+              <span class="user-login-keyword-box">
+                <input type="checkbox" id="key24" name="keyword" value="바리스타" style="display: none;">
+                <label for="key24">바리스타</label>
               </span>
 
             </div>
@@ -261,79 +239,54 @@
 
             <!-- 세번쨰 대분류의 키워드 시작-->
             <div class="user-login-keyword-title">
-              <h6>키워드 대분류</h6>
+              <h6>가드닝·반려동물·뷰티</h6>
               
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key1" style="display: none;">
-                <label for="key1">일</label>
+                <input type="checkbox" id="key25" name="keyword" value="꽃다발" style="display: none;">
+                <label for="key25">꽃다발</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key2" style="display: none;">
-                <label for="key2">이</label>
+                <input type="checkbox" id="key26" name="keyword" value="테라리움" style="display: none;">
+                <label for="key26">테라리움</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key3" style="display: none;">
-                <label for="key3">삼</label>
+                <input type="checkbox" id="key27" name="keyword" value="꽃꽂이" style="display: none;">
+                <label for="key27">꽂꽂이</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key4" style="display: none;">
-                <label for="key4">사</label>
+                <input type="checkbox" id="key28" name="keyword" value="강아지" style="display: none;">
+                <label for="key28">강아지</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key5" style="display: none;">
-                <label for="key5">오</label>
+                <input type="checkbox" id="key29" name="keyword" value="고양이" style="display: none;">
+                <label for="key29">고양이</label>
               </span>
               <br>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key1" style="display: none;">
-                <label for="key1">일</label>
+                <input type="checkbox" id="key30" name="keyword" value="펫푸드" style="display: none;">
+                <label for="key30">펫푸드</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key2" style="display: none;">
-                <label for="key2">이</label>
+                <input type="checkbox" id="key31" name="keyword" value="화장품" style="display: none;">
+                <label for="key31">화장품</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key3" style="display: none;">
-                <label for="key3">삼</label>
+                <input type="checkbox" id="key32" name="keyword" value="메이크업" style="display: none;">
+                <label for="key32">메이크업</label>
               </span>
               <span class="user-login-keyword-box">
-                <input type="checkbox" id="key4" style="display: none;">
-                <label for="key4">사</label>
+                <input type="checkbox" id="key33" name="keyword" value="데이트" style="display: none;">
+                <label for="key33">데이트</label>
               </span>
-              <span class="user-login-keyword-box">
-                <input type="checkbox" id="key5" style="display: none;">
-                <label for="key5">오</label>
-              </span>
-              <br>
-              <span class="user-login-keyword-box">
-                <input type="checkbox" id="key1" style="display: none;">
-                <label for="key1">일</label>
-              </span>
-              <span class="user-login-keyword-box">
-                <input type="checkbox" id="key2" style="display: none;">
-                <label for="key2">이</label>
-              </span>
-              <span class="user-login-keyword-box">
-                <input type="checkbox" id="key3" style="display: none;">
-                <label for="key3">삼</label>
-              </span>
-              <span class="user-login-keyword-box">
-                <input type="checkbox" id="key4" style="display: none;">
-                <label for="key4">사</label>
-              </span>
-              <span class="user-login-keyword-box">
-                <input type="checkbox" id="key5" style="display: none;">
-                <label for="key5">오</label>
-              </span>
-
+           
             </div>
             <!-- 세번쨰 대분류의 키워드 끝-->
 
             <!-- 확인 및 넘어가기 버튼 시작-->
             <div class="user-login-keyword-contents">
               <span class="user-loginbtn">
-                <button type="button" class="user-backbtn" onclick="location.href='../../공통/main.html'">넘어가기</button>
-                <input type="submit" value="확인" class="user-gobtn">
+                <button type="button" class="user-backbtn" onclick="location.href='../common/main.jsp'">넘어가기</button>
+                <button type="submit" class="user-gobtn">확인</button>
               </span>
             </div>
             <!-- 확인 및 넘어가기 버튼 끝-->
@@ -407,14 +360,7 @@
     });
   </script>
   <!-- 체크박스 클릭시 색상 변경되거나 해제되는 이벤트 스크립트 끝-->
-  <!-- 확인 클릭시 다음 페이지로 넘어가기 스크립트 시작-->
-  <script>
-    document.querySelector(".user-gobtn").addEventListener("click", function(event) {
-    event.preventDefault(); // 기본 동작인 폼 제출 방지
-    location.href = "../../공통/main.html"; // 링크로 이동
-  });
-  </script>
-   <!-- 확인 클릭시 다음 페이지로 넘어가기 스크립트 끝-->
+
     <!-- End Script -->
 </body>
 </html>

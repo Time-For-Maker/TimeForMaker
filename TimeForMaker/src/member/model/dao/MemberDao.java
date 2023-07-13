@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import member.model.vo.ClassKeyword;
 import member.model.vo.Member;
 
 public class MemberDao {
@@ -43,7 +44,6 @@ public class MemberDao {
 						rset.getString("USER_NAME"),
 						rset.getString("USER_PWD"),
 						rset.getString("USER_NICK"),
-						rset.getBytes("USER_IMG"),
 						rset.getString("USER_PHONE"),
 						rset.getDate("USER_ENROLL"),
 						rset.getDate("USER_MODIFY"),
@@ -110,8 +110,32 @@ public class MemberDao {
 		return count;
 	}	
 	
-	
-	
+	public int insertClassKeyword(Connection conn, String classKeyword , String userId ) {
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertClassKeyword");
+		String[] keyword = classKeyword.split(", ");
+		int result = 1; // 0실패
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			for (String k : keyword) {
+				pstmt.setString(1, k);
+				pstmt.setString(2, userId);
+				result *= pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public Member selectMember(Connection conn, String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 	

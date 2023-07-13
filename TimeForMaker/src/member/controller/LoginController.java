@@ -41,19 +41,19 @@ public class LoginController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
+
 		
 		Member loginUser = new MemberService().loginMember(userId, userPwd);
 		
 		if(loginUser == null) {
 			request.setAttribute("errorMsg","로그인에 실패했습니다");
-		
 			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
 			view.forward(request, response);
+
 		}else {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("alertMsg", "성공적으로 로그인이 되었습니다."); // 확인용 나중에 지워도 됨.
-			
 			response.sendRedirect(request.getContextPath());
 		}
 	

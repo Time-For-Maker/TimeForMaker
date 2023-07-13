@@ -41,6 +41,21 @@ public class MemberService {
 		return count;
 	}
 	
+	public int insertClassKeyword(String classKeyword , String userId ) {
+		
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().insertClassKeyword(conn,classKeyword,userId);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
 	
 	
 	
