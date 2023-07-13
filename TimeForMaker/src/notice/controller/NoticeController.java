@@ -1,23 +1,30 @@
-package controller;
+package notice.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import notice.model.vo.Notice;
+import notice.service.NoticeService;
+
 /**
- * Servlet implementation class TestController
+ * Servlet implementation class NoticeController
+ * 
+ * get 방식 요청시 해당 공지글 리턴
+ * 
  */
-@WebServlet("/TestController")
-public class TestController extends HttpServlet {
+@WebServlet("/notice")
+public class NoticeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TestController() {
+    public NoticeController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,8 +33,23 @@ public class TestController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		int no = Integer.parseInt(request.getParameter("no"));
+		// 이전글, 현재글, 다음글 순으로 리스트에 담기
+		Notice[] list = new Notice[3];
+
+		for(int i=0; i<3; i++) {
+			int number=0;
+			
+			switch(i) {
+			case 0 : number = no-1; break;
+			case 1 : number = no; break;
+			case 2 : number = no+1; break;
+			}
+			list[i] = new NoticeService().selectUploadeNotice(number);
+		}
+		
+		request.setAttribute("list", list);
+		request.getRequestDispatcher("views/common/notice.jsp").forward(request, response);
 	}
 
 	/**

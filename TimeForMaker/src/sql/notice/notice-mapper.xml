@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<entry key="selectAllUploadedNotice">
+		select rownum, n.*
+		from (select * from notice where save='N' order by create_date desc) n
+	</entry>
+	
+	<entry key="countAllSavedNotice">
+		select count(*) count from notice where save='Y'
+	</entry>
+	
+	<entry key="selectImportantNotice">
+		select * from notice where save='N' and impt='Y' order by create_date desc
+	</entry>
+	
+	<entry key="selectNormNoticeList">
+		select *
+		from (select rownum rnum, n.* from notice n where save='N' and impt='N' order by create_date desc)
+		where rnum between ? and ?
+	</entry>
+	
+	<entry key="searchNoticeTitle">
+		select *
+		from (select rownum rnum, n.* 
+			from notice n where save='N' and impt='N' and title like '%'+?+'%'
+			order by create_date desc)
+		where rnum between ? and ?
+	</entry>
+	
+	<entry key="searchNoticeContent">
+		select *
+		from (select rownum rnum, n.* 
+			from notice n where save='N' and impt='N' and content like '%'+?+'%'
+			order by create_date desc) 
+		where rnum between ? and ?
+	</entry>
+	
+	<entry key="searchNotice">
+		select *
+		from (select rownum rnum, n.*
+			from notice n where save='N' and impt='N' and (title like '%'+?+'%' || content like '%'+?+'%')
+			order by create_date desc) 
+		where rnum between ? and ?
+	</entry>
+	
+	<entry key="selectSavedNoticeList">
+		select *
+		from (select rownum rnum, n.* from notice n where save='Y' order by create_date desc) 
+		where rnum between ? and ?
+	</entry>
+	
+	<entry key="selectUploadeNotice">
+		select n.*
+		from (select rownum, * from notice where save='N') n
+		where rownum=?
+	</entry>
+	
+	<entry key="selectSavedNotice">
+		select n.*
+		from (select rownum, * from notice where save='Y') n
+		where rownum=?
+	</entry>
+	
+	<entry key="updateNotice">
+		update notice set title=?, content=?, create_date=sysdate ,save=?, impt=?
+		where notice_no=?
+	</entry>
+	
+	<entry key="insertNotice">
+		insert into notice(notice_no, title, content, save, impt)
+		values('N'||seq_notice.nextval, ?, ?, ?, ?)
+	</entry>
+	
+	<entry key="deleteNotice">
+		delete from notice where notice_no=?
+	</entry>
+</properties>
