@@ -48,7 +48,7 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item list-group-title"><span>고객센터</span></li>
                 <li class="list-group-item list-group-sub side-menu-selected"><a href="<%=contextPath%>/noticeBoard">공지사항</a></li>
-                <li class="list-group-item list-group-sub"><a href="<%=contextPath%>">회원 문의</a></li>
+                <li class="list-group-item list-group-sub"><a href="<%=contextPath%>/receptionManage">회원 문의</a></li>
               </ul>
         </div>
         <!-- Close Side-Menu -->

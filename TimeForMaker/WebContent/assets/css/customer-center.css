@@ -541,7 +541,7 @@ Custom Css
 
 /* .recept-form :where(div>div>label){color: red;} */
 
-.recept-form>.recept-right-info-container>div{padding-top:1%; padding-bottom: 3%;}
+.recept-form>.recept-right-info-container>div{padding-top:1%; padding-bottom: 3%; font-size:0.8em;}
 
 .recept-right-info-btn{margin-left: 1%; font-size: 0.67em; background-color: transparent;}
 

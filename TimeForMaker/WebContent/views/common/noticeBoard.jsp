@@ -106,26 +106,26 @@
                         
                         * 공지 리스트에 필요한 것 : rownum (공지번호글X), 공지 제목, 등록일
                     -->
-                    <% for(int i=0; i<10; i++) { %>
-	                    <% 
-	                    	if(imList != null){
-	                    		for(Notice n : imList){ %>
-	                    			<tr class="important-notice">
-				                        <th scope="row"><%=n.getRowNum() %></th>
-				                        <td colspan="2"><a href="<%=contextPath %>/notice?no=<%=n.getRowNum() %>"><%=n.getTitle() %></a></td>
-				                        <td><%=n.getDate() %></td>
-	                    			</tr>
-	                    			<% continue; %>
-	                    		<% } %>
-	                   	<%	} %>
-	                   	<% for(Notice n : list){ %>
-                    		<tr>
+                    <% int i=0; %>
+                    <% if(imList != null){
+                   		for(Notice n : imList){ %>
+                   			<tr class="important-notice">
 		                        <th scope="row"><%=n.getRowNum() %></th>
 		                        <td colspan="2"><a href="<%=contextPath %>/notice?no=<%=n.getRowNum() %>"><%=n.getTitle() %></a></td>
 		                        <td><%=n.getDate() %></td>
-		                    </tr>
-		                    <% continue; %>
-                   		<% } %>
+                   			</tr>
+                   		<% i++;
+                   			} %>
+                   	<%	} %>
+                   	<% for(Notice n : list){ %>
+                   		<tr>
+	                        <th scope="row"><%=n.getRowNum() %></th>
+	                        <td colspan="2"><a href="<%=contextPath %>/notice?no=<%=n.getRowNum() %>"><%=n.getTitle() %></a></td>
+	                        <td><%=n.getDate() %></td>
+	                    </tr>
+	                    <% i++; %>
+                 	<% } %>
+                   	<% for(; i<10; i++) { %>
                    		<tr>
 	                        <th scope="row"></th>
 	                        <td colspan="2"><a href=""></a></td>

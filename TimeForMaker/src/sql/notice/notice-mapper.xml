@@ -70,7 +70,7 @@
 	
 	<entry key="insertNotice">
 		insert into notice(notice_no, title, content, save, impt)
-		values('N'||seq_notice.nextval, ?, ?, ?, ?)
+		values('N'||lpad(seq_notice.nextval,4,0), ?, ?, ?, ?)
 	</entry>
 	
 	<entry key="deleteNotice">
