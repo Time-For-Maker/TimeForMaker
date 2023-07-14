@@ -1,11 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member"%>
+<%
+	String contextPath = request.getContextPath();
+	Member loginUser = (Member) session.getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 <head><script type="text/javascript" src="/___vscode_livepreview_injected_script"></script>
   <title>MyPageMain</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+<script>
+	const contextPath = "<%= request.getContextPath()%>";
+</script>
 
   <link rel="apple-touch-icon" href="../../assets/img/apple-icon.png">
   <link rel="shortcut icon" type="image/x-icon" href="../../assets/img/favicon.ico">
@@ -20,7 +28,16 @@
   <link rel="stylesheet" href="../../assets/css/fontawesome.min.css">
 
 </head>
-
+<body>
+		<script>
+			const msg = "<%= (String)session.getAttribute("alertMsg") %>";
+			if(msg != "null"){
+				alert(msg);
+				// 알림창을 띄워준 후 session에 담긴 해당 메세지는 지워줘야한다.
+				// 안그럼, menubar.jsp가 로딩될때마다 항상 메세지가 뜰것..
+				<% session.removeAttribute("alertMsg"); %>
+			}
+		</script>
     <!-- Header -->
    <nav class="navbar navbar-expand-lg navbar-light shadow main_nav_all">
     <div class="container d-flex justify-content-between align-items-center">
@@ -37,7 +54,7 @@
             <div class="flex-fill">
                 <ul class="nav justify-content-end">
                     <li class="nav-item">
-                        <a class="nav-link" href="../../공통/main.html">로그아웃</a>
+                        <a class="nav-link" href="<%=contextPath %>/Logout.me">로그아웃</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../customer-center/reception-board.html">고객센터</a>
@@ -83,7 +100,7 @@
         <div class="mypage-main-sidemenu">
             <div class="mypage-sidemenu-title">
                 <h5>마이페이지</h5>
-                <span><a href="MyPageReservStatus.html">나의 예약</a></span><br>
+                <span><a href="<%= contextPath%>/views/mypage/MyPageMain.jsp">나의 예약</a></span><br>
                 <span><a href="MyPageEditInfo.html">내 정보 수정</a></span><br>
                 <span><a onclick="mypage_Withdrawal()">회원탈퇴</a></span><br>
             </div>
@@ -240,8 +257,13 @@
                             <h6>회원 탈퇴 전, 유의사항을 확인해 주시기 바랍니다.</h6>
                             <p>- 회원 탈퇴시 회원전용 웹 서비스 이용이 블가합니다.<br>- 거래정보가 있는 경우, 전자상거래 등에서의 소비자 보호에 관한 법률에따라 계약 또는 청약 청회에 관한 기록, 대금결제 및 재화 등의  기록은 5년동안 보존됩니다.<br>- 이미 결제가 완료된 건은 탈퇴로 취소되지 않습니다.</p>
                         </span>
-                        <button class="mypage_Withdrawal_more_check_yes" onclick="mypage_Withdrawal_more_check_yes();">예</button>
-                        <button class="mypage_Withdrawal_more_check_no" onclick="mypage_Withdrawal_more_check_no();">아니요</button>
+                        <form action="<%= contextPath %>/delete.me" method="post">
+                        	<span>비밀번호 입력 :</span>
+                        	<input type="password" name="userPwd" required>
+                        	<br>
+                        	<button type="submit" class="mypage_Withdrawal_more_check_yes">탈퇴하기</button>
+                        	<button class="mypage_Withdrawal_more_check_no" onclick="mypage_Withdrawal_more_check_no();">아니요</button>
+                        </form>
                     </div>
 
                 </div>
@@ -355,6 +377,33 @@
     });
   </script>
   <!-- 스크롤 관련 스크립트 끝-->
+  	<script>
+		 
+		function mypage_Withdrawal(){
+		  let modal = document.querySelector(".mypage_Withdrawal_more");
+		  modal.style.display = "block";
+		}
+		function mypage_Withdrawal_more_check_yes(){
+		  let modal = document.querySelector(".mypage_Withdrawal_more");
+		  let modal2 = document.querySelector(".mypage_Withdrawal_final");
+		  modal.style.display = "none";
+		  modal2.style.display = "block";
+		}
+		function mypage_Withdrawal_more_check_no(){
+		  let modal = document.querySelector(".mypage_Withdrawal_more");
+		  modal.style.display = "none";
+		}
+		function mypage_Withdrawal_final_check_yes(){
+		  let modal = document.querySelector(".mypage_Withdrawal_final");
+		  modal.style.display = "none";
+		  location.href = "../../LoginMain.jsp"; // 링크로 이동
+		}
+		function mypage_Withdrawal_final_check_no(){
+		  let modal = document.querySelector(".mypage_Withdrawal_final");
+		  modal.style.display = "none";
+		}
+	
+	</script>
   <!-- End Script -->
   
   

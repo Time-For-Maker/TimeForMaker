@@ -5,6 +5,7 @@ import static common.JDBCTemplate.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,25 +26,27 @@ public class MemberDao {
 			e.printStackTrace();
 		}
 	}
-	
 	public Member loginMember(Connection conn, String userId, String userPwd) {
 		Member m = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("loginMember");
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			
 			pstmt.setString(1, userId);
 			pstmt.setString(2, userPwd);
+			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				
 				m = new Member(
+						rset.getInt("USER_NO"),
 						rset.getString("USER_ID"),
 						rset.getString("USER_NAME"),
-						rset.getString("USER_PWD"),
 						rset.getString("USER_NICK"),
+						rset.getString("USER_PWD"),
 						rset.getString("USER_PHONE"),
 						rset.getDate("USER_ENROLL"),
 						rset.getDate("USER_MODIFY"),
@@ -60,6 +63,8 @@ public class MemberDao {
 		return m;
 	}
 	
+	
+
 	public int insertMember(Connection conn, Member m) {
 		// insert => 처리된 행의 개수를 반환
 		int result = 0;
@@ -69,11 +74,11 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, m.getUserNick());
-			pstmt.setString(2, m.getUserPwd());
-			pstmt.setString(3, m.getUserId());
-			pstmt.setString(4, m.getUserPhone());
-			pstmt.setString(5, m.getUserName());
+			pstmt.setString(1, m.getUserId());
+			pstmt.setString(2, m.getUserName());
+			pstmt.setString(3, m.getUserPwd());
+			pstmt.setString(4, m.getUserNick());
+			pstmt.setString(5, m.getUserPhone());
 
 			
 			result = pstmt.executeUpdate();
@@ -131,12 +136,23 @@ public class MemberDao {
 		return result;
 	}
 
-	public Member selectMember(Connection conn, String userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public int deleteMember(Connection conn, String userId, String userPwd) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteMember");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userPwd);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+//		System.out.println("DAO result : "+ result);
+		return result;
 	}
-
-	
 	
 	
 	

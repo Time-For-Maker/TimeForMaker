@@ -107,8 +107,14 @@
           <form class="user-login-condition" action="<%= contextPath %>/insert.me" method="post">
             
 
-              <h6> 닉네임 <span style="color: red;">*</span></h6>
-              <input type="text" name="userNick" placeholder="닉네임을 입력해주세요" required>
+ 			  <h6> 이메일 <span style="color: red;">*</span> </h6>
+              <input type="text" name="userId" style="width: 345px;" placeholder="이메일을 입력해주세요" required>
+              <button type="button" onclick="idCheck();" style="width: 100px; height:30px; border-radius: 5px; border: none; background-color: #f7e8ad; color: rgb(85, 85, 85); font-size: 12px;">
+			  중복확인</button>
+			  
+			  <h6> 이름 <span style="color: red;">*</span></h6>
+              <input type="text" name="userName" placeholder="이름을 입력해주세요" required>
+			  
 
               <h6> 비밀번호 <span style="color: red;">*</span></h6>
               <input type="password" id="pwd1" name="userPwd" placeholder="비밀번호를 입력해주세요" required>
@@ -116,19 +122,12 @@
               <h6> 비밀번호 확인 <span style="color: red;">*</span></h6>
               <input type="password" id="pwd2" name="checkPwd" onblur="validatePwd();" placeholder="비밀번호 재확인" required>
 
-              <h6> 이메일 <span style="color: red;">*</span> </h6>
-              <input type="text" name="userId" style="width: 345px;" placeholder="이메일을 입력해주세요" required>
-              <button type="button" onclick="idCheck();" style="width: 100px; height:30px; border-radius: 5px; border: none; background-color: #f7e8ad; color: rgb(85, 85, 85); font-size: 12px;">
-			  중복확인</button>
+				<h6> 닉네임 <span style="color: red;">*</span></h6>
+              <input type="text" name="userNick" placeholder="닉네임을 입력해주세요" required>
+             
 			  
 			  <h6> 전화번호 <span style="color: red;">*</span></h6>
               <input type="text" name="userPhone" maxlength="11" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="- 제외한 숫자만 입력해주세요" required>
-              
-				
-              <h6> 이름 <span style="color: red;">*</span></h6>
-              <input type="text" name="userName" placeholder="이름을 입력해주세요" required>
-
-
               
 
               <span class="user-loginbtn">

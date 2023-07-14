@@ -37,42 +37,40 @@
 
      <!-- Header -->
    <nav class="navbar navbar-expand-lg navbar-light shadow main_nav_all">
-    <div class="container d-flex justify-content-between align-items-center">
+        <div class="container d-flex justify-content-between align-items-center">
 
-        <a class="navbar-brand text-success logo h1 align-self-center" href="main.html">
-            <img src="../../assets/img/메인로고.png" class="main_logo">
-        </a>
+            <a class="navbar-brand text-success logo h1 align-self-center" href="main.html">
+                <img src="../assets/img/메인로고.png" class="main_logo">
+            </a>
 
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
-            <div class="flex-fill">
-                <ul class="nav justify-content-end">
-                    <li class="nav-item">
-                        <a class="nav-link" href="LoginMain.html">로그인</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="SignUpCondition.html">회원가입</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">고객센터</a>
-                    </li>
-                </ul>
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link" href="">로그아웃</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">고객센터</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar align-self-center d-flex">
+                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                    </a>
+                </div>
             </div>
-            <div class="navbar align-self-center d-flex">
-                <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
-                    <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                </a>
-                <a class="nav-icon position-relative text-decoration-none" href="#">
-                    <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                </a>
-            </div>
+
         </div>
-
-    </div>
-</nav>
+    </nav>
 <!-- Close Header -->
 
 <!-- Modal 헤드에 검색 누르면 나오는 모달  -->
@@ -98,22 +96,9 @@
         <!-- 회원 가입 상단바 시작-->
         <ul class="nav justify-content-center">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#" > <span style="color:gray; font-size: 12px;">________________________　　　쉽고 간단한 로그인 및 회원 가입　　　________________________</span></a>
+            <a class="nav-link active" aria-current="page" href="#" > <span style="color:gray; font-size: 12px;">________________________　　　쉽고 간단한 키워드 설정　　　________________________</span></a>
           </li>
         </ul>
-        <div class="user-login-chapter">
-          <span class="user-login2-chap1">
-           1
-          </span>
-          <span style="color: gray; font-size: 15px;">ㅡ</span>
-          <span class="user-login2-chap2">
-            2
-          </span>
-          <span style="color: gray; font-size: 15px;">ㅡ</span>
-          <span class="user-login2-chap3">
-            3
-          </span>
-        </div>
         <h5 style="margin-top: 15px;">키워드 입력하기</h5>
         <!-- 회원 가입 상단바 끝-->
 

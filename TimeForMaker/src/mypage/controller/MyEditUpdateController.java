@@ -45,9 +45,15 @@ public class MyEditUpdateController extends HttpServlet {
 		String userPhone = request.getParameter("userPhone");
 		String userName = request.getParameter("userName");
 		
-		Member m = new Member(userNick, userPwd, userId, userPhone, userName);
+		System.out.println("controller userName : "+userName);
+		System.out.println("controller userId : "+userId);
+		System.out.println("controller userNick : "+userNick);
+		System.out.println("controller userId : "+userPwd);
+		System.out.println("controller userId : "+userPhone);
+		
+		Member m = new Member(userId, userName, userPwd, userNick, userPhone);
 		Member updateMember = new MyPageService().MyEditUpdate(m);
-	
+		System.out.println("controller updateMember : "+updateMember);
 		if(updateMember == null) {// 실 패
 			
 			request.setAttribute("errorMsg", "회원정보 수정에 실패했습니다.");

@@ -28,6 +28,9 @@
     <%
     	String userId = loginUser.getUserId();
     	String userName = loginUser.getUserName();
+    	String userPhone = loginUser.getUserPhone() == null ? "" : loginUser.getUserPhone();
+		String userNick = loginUser.getUserNick() == null ? "" : loginUser.getUserNick();
+		String userPwd = loginUser.getUserPwd() == null ? "" : loginUser.getUserPwd();
     %>
 
     <!-- Header -->
@@ -56,7 +59,6 @@
                 <div class="navbar align-self-center d-flex">
                     <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                    </a>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="#">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>
@@ -94,7 +96,6 @@
                 <h5>마이페이지</h5>
                 <span><a href="MyPageReservStatus.html">나의 예약</a></span><br>
                 <span><a href="MyPageEditInfo.html">내 정보 수정</a></span><br>
-                <span><a onclick="mypage_Withdrawal()">회원탈퇴</a></span><br>
             </div>
             <div class="mypage-sidemenu-title">
                 <h5>고객센터</h5>
@@ -141,29 +142,30 @@
               
 
               
-              <form action="" class="/myedit.me" method="post" enctype="multipart/form-data">
+              <form action="<%=contextPath %>/myedit.me" method="post">
            
 
                 <div class="mypage-editinfo-list-wrapper">
                   <div class="mypage-editinfo-list">
                     <h6>유저 아이디</h6>
                     <input type="text" name="userId" readonly value="<%= userId %>" style="border:none;"> 
-
-                    <h6> 닉네임 <span style="color: red;">*</span></h6>
-                    <input type="text" id="userNick" name="userNick" placeholder="변경할 닉네임을 입력해주세요">
-
+                    
+                    <h6> 이름 </h6>
+                    <input type="text" name="userName" value="<%=userName%>" placeholder="변경할 이름을 입력해주세요">
+                    
                     <h6> 새로운 비밀번호 <span style="color: red;">*</span></h6>
                     <input type="password" id="pwd1" name="userPwd"  placeholder="새로운 비밀번호를 입력해주세요">
 
                     <h6> 비밀번호 확인 <span style="color: red;">*</span></h6>
                     <input type="password" id="pwd2" name="checkPwd" onblur="validatePwd();" placeholder="비밀번호 재확인">
-                
-                	<h6> 전화번호 변경 <span style="color: red;">*</span></h6>
-                    <input type="text" name="userPhone" maxlength="11" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="- 제외한 숫자만 입력해주세요">
-                    
-                    <h6> 이름 <span style="color: red;">*</span></h6>
-                    <input type="text" name="userName" placeholder="변경할 이름을 입력해주세요">
 
+                    <h6> 닉네임 </h6>
+                    <input type="text" id="userNick" name="userNick" value="<%=userNick%>" placeholder="변경할 닉네임을 입력해주세요">
+                
+                	<h6> 전화번호 변경 </h6>
+                    <input type="text" name="userPhone" maxlength="11" value="<%=userPhone%>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="- 제외한 숫자만 입력해주세요">
+                    
+                  
                     
 
                     <span class="user-loginbtn2">
@@ -209,7 +211,6 @@
             </div>
         </div>
     
-    </div>
     <!-- close body -->
 
 
@@ -257,7 +258,7 @@
 
   <!-- Start Script -->
   
-  <script src="../../assets/js/jquery-1.11.0.min.js"></script>
+  	<script src="../../assets/js/jquery-1.11.0.min.js"></script>
 
 	<script>
 		function validatePwd() {
@@ -268,44 +269,6 @@
 		}
 	
 	</script>
-
-  <!-- 내 정보 수정의 프로필 사진 변경 스크립트 시작-->
-<!--   <script>
-    $(function() {
-      // Trigger file input click when the change button is clicked
-      $(".mypage-myimg-change").click(function() {
-        $(".mypage-imageInput").click();
-      });
-  
-      // Handle file input change event
-      $(".mypage-imageInput").change(function() {
-        var input = this;
-        var image = $(".mypage-myimg")[0];
-  
-        if (input.files && input.files[0]) {
-          var reader = new FileReader();
-  
-          reader.onload = function(e) {
-            image.src = e.target.result;
-            image.alt = 'User Image';
-          };
-  
-          reader.readAsDataURL(input.files[0]);
-        }
-      });
-    });
-  </script> -->
-   <!-- 내 정보 수정의 프로필 사진 변경 스크립트 끝-->
-
-    <!-- 확인 클릭시 다음 페이지로 넘어가기 스크립트 시작-->
-<!--     <script>
-      document.querySelector(".user-gobtn").addEventListener("click", function(event) {
-      event.preventDefault(); // 기본 동작인 폼 제출 방지
-      location.href = "MyPageMain.html"; // 링크로 이동
-    });
-    </script> -->
-     <!-- 확인 클릭시 다음 페이지로 넘어가기 스크립트 끝-->
-     
     <script src="../../assets/js/mypage_withdrawal_modal.js"></script>
     <script src="../../assets/js/jquery-migrate-1.2.1.min.js"></script>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>

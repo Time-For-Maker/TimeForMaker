@@ -36,14 +36,15 @@ public class SignUpController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String userNick = request.getParameter("userNick");
-		String userPwd = request.getParameter("userPwd");
 		String userId = request.getParameter("userId");
-		String userPhone = request.getParameter("userPhone");
 		String userName = request.getParameter("userName");
+		String userPwd = request.getParameter("userPwd");
+		String userNick = request.getParameter("userNick");
+		String userPhone = request.getParameter("userPhone");
+		
 
 		
-		Member m = new Member(userNick, userPwd, userId, userPhone, userName);
+		Member m = new Member(userId, userName,  userPwd, userNick, userPhone);
 		
 		int result = new MemberService().isertMember(m);
 		

@@ -1,59 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-	<entry key="loginMember">
-		SELECT *
-		FROM MEMBER
-		WHERE USER_ID = ?
-			AND USER_PWD = ?
-			AND USER_TYPE = 'Y'
-	</entry>
-	<entry key="insertMember">
-		INSERT INTO MEMBER(
-							USER_NICK,
-							USER_PWD,
-							USER_ID,
-							USER_PHONE,
-							USER_NAME
-							)
-		VALUES(
-				?,
-				?,
-				?,
-				?,
-				?		
-				)
-	</entry>
-	<entry key="idCheck">
-		SELECT COUNT(*)
-		FROM MEMBER
-		WHERE USER_ID = ?
-	</entry>
-	<entry key="insertClassKeyword">
-		INSERT INTO USER_KEYWORD(CLASS_KEYWORD,USER_ID)
-		VALUES(?,?)
-	</entry>
-		<entry key="MyEditUpdate">
-		DECLARE
-		  current_date DATE := SYSDATE
-		BEGIN
-		  UPDATE MEMBER
-		  SET USER_NICK = ?,
-		  	  USER_PWD = ?,
-		      USER_PHONE = ?,
-		      USER_NAME = ?,
-		      USER_MODIFY = current_date
-		  WHERE USER_ID = ?
-		END
-		/
-	</entry>
-	<entry key="selectMember">
-		SELECT *
-		FROM MEMBER
-		WHERE USER_ID = ?
-			AND USER_TYPE = 'Y'
-	</entry>
+<entry key="loginMember">
+	SELECT *
+	FROM MEMBER
+	WHERE USER_ID = ?
+		AND USER_PWD = ?
+		AND USER_TYPE = 'Y'
+</entry>
+<entry key="insertMember">
+	INSERT INTO MEMBER(
+						USER_NO,
+						USER_ID,
+						USER_NAME,
+						USER_PWD,
+						USER_NICK,
+						USER_PHONE
+						)
+	VALUES(SEQ_USERNO.NEXTVAL,
+			?,
+			?,
+			?,
+			?,
+			?		
+			)
+</entry>
+<entry key="idCheck">
+	SELECT COUNT(*)
+	FROM MEMBER
+	WHERE USER_ID = ?
+</entry>
+<entry key="insertClassKeyword">
+	INSERT INTO USER_KEYWORD(CLASS_KEYWORD,USER_ID)
+	VALUES(?,?)
+</entry>
 
+<entry key="MyEditUpdate">
+  UPDATE MEMBER
+    SET USER_NAME = ?,
+        USER_PWD = ?,
+        USER_NICK = ?,
+        USER_PHONE = ?,
+        USER_MODIFY = SYSDATE
+    WHERE USER_ID = ?
+</entry>
+<entry key="selectMember">
+	SELECT *
+	FROM MEMBER
+	WHERE USER_ID = ?
+		AND USER_TYPE = 'Y'
+</entry>
+<entry key="deleteMember">
+	UPDATE MEMBER
+	   SET USER_TYPE = 'N' 
+	 WHERE USER_ID = ? 
+	   AND USER_PWD = ?
+</entry>
 
 
 </properties>
