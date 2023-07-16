@@ -1,4 +1,4 @@
-<%@ page import="notice.model.vo.Notice" %>
+<%@ page import="notice.model.vo.Notice, common.model.vo.Member" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -6,10 +6,10 @@
 
 	// loginUser 세션에서 가져와야 함
 	// loginUser에서 관리자인지 회원인지 구분 필요
-	// Member loginUser = request.getSession().getAttribute("loginUser");
+	Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 	
 	Notice[] list = (Notice[])request.getAttribute("list");
-	int nowNotice = list[1].getRowNum();
+	int nowNotice = Integer.parseInt(list[1].getNoticeNo().substring(1));
 %>
 <!DOCTYPE html>
 <html>
@@ -39,9 +39,6 @@
 
 	<!-- Start 공지글 -->
     <div class="notice-side-container" style="position: relative;">
-        <!-- Start Notice Page Title -->
-        <h3 align="center" class="customer-center-title">공지사항</h3>
-        <!-- Close Notice Page Title -->
 
         <!-- Start Side-Menu -->
         <div class="side-menu">
@@ -50,7 +47,7 @@
             		String[] noticeHref = {"공지사항", "noticeBoard"};
             		String[] receptHref = new String[2];
             		
-	            	if(loginUser.managerType="Y"){
+	            	if(loginUser!=null && loginUser.getUserId().equals("M")){
 	            		receptHref[0]="회원 문의";
 	            		receptHref[1]="receptionManage";
 	            	}else{
@@ -67,7 +64,10 @@
     
         <!-- Start Notice Detail Container -->
         <div class="notice-board-area">
-
+			<!-- Start Notice Page Title -->
+	        <h3 align="center" class="customer-center-title">공지사항</h3>
+	        <!-- Close Notice Page Title -->
+	        
             <div class="notice-content">
                 <h4><%=list[1].getTitle() %></h4>
                 <div class="notice-content-part">
@@ -77,23 +77,24 @@
                         <button class="copy-link-btn"><span>링크복사</span></button>
                         <input type="text" id="urlAddress" style="display:none;">
                     </div>
-                    <textarea> 
-                        <%=list[1].getContent() %>
-                    </textarea>
-                    <!-- 파일 칸 -->
+                    <textarea readonly></textarea>
+                    <script>
+	                    let text = "<%=list[1].getContent()%>".replaceAll("<br>", "\r\n");
+			        	$(".notice-content-part>textarea").val(text);
+                    </script>
                 </div>
             </div>
             <div class="notice-content-nav">
-            	<% if(nowNotice!=1){ %>
+            	<% if(nowNotice!=1 && list[0]!=null){ %>
 	                <div class="notice-content-nav-item prev">
 	                    <span>이전</span>
-	                    <a href="<%=contextPath %>/notice?no=<%=nowNotice-1%>"><%=list[0].getTitle() %></a>
+	                    <a href="<%=contextPath %>/notice?no=<%=list[0].getRowNum() %>&impt=<%=list[0].getImpt()%>"><%=list[0].getTitle() %></a>
 	                </div>
 	            <% } %>
 	            <% if(list[2]!=null){ %>
 	                <div class="notice-content-nav-item next">
 	                    <span>다음</span>
-	                    <a href="<%=contextPath %>/notice?no=<%=nowNotice+1%>"><%=list[2].getTitle() %></a>
+	                    <a href="<%=contextPath %>/notice?no=<%=list[2].getRowNum() %>&impt=<%=list[2].getImpt()%>"><%=list[2].getTitle() %></a>
 	                </div>
 	            <% } %>
             </div>
@@ -125,7 +126,7 @@
             <div class="row">
 
                 <div class="col-md-4 pt-5">
-                    <img src="../assets/img/메인로고.png" class="main_logo">
+                    <img src="assets/img/메인로고.png" class="main_logo">
                     <ul class="list-unstyled text-light footer-link-list">
                         <li>
                             <i class="fas fa-map-marker-alt fa-fw"></i>
@@ -160,8 +161,8 @@
     <!-- End Footer -->
 	
 	<!-- Start Script -->
-    <script src="/TimeForMaker/assets/js/templatemo.js"></script>
-    <script src="/TimeForMaker/assets/js/customer-center.js"></script>
+    <script src="<%=contextPath %>/assets/js/templatemo.js"></script>
+    <script src="<%=contextPath %>/assets/js/customer-center.js"></script>
     <script>
 	    /* url 링크 복사 기능 */
 	    $(".copy-link-btn").click(function(){

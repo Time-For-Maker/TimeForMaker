@@ -1,4 +1,4 @@
-<%@ page import="java.util.ArrayList, reception.model.vo.Reception" %>
+<%@ page import="reception.model.vo.Reception, reception.model.vo.ReceptionFile" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -8,6 +8,7 @@
 	// loginUser에서 관리자인지 회원인지 구분 필요
 	// Member loginUser = request.getSession().getAttribute("loginUser");
 	Reception r = (Reception)request.getAttribute("r");
+	ReceptionFile rfile = (ReceptionFile)request.getAttribute("rfile");
 %>
 <!DOCTYPE html>
 <html>
@@ -67,14 +68,35 @@
                         <div class="recpet-content-header">
                             <p>접수일<span><%=r.getUploadDate() %></span></p>
                         </div>
-                        <textarea class="recpet-content-text" id="recpet-content-text" rows="15" onclick="this.select()" onfocus="this.select()" readonly><%=r.getText() %></textarea>
+                        <textarea class="recpet-content-text" id="recpet-content-text" rows="15" onclick="this.select()" onfocus="this.select()" readonly></textarea>
+                        <script>
+	                        let text1 = "<%=r.getText()%>".replaceAll("<br>", "\r\n");
+				        	$("#recpet-content-text").val(text1);
+                        </script>
+                        
+                        <% if(rfile!=null){ %>
+	                    	<div class="reception-file-area">
+	                            <label for="reception-file">
+	                                <div class="recept-file-upload-btn">
+	                                    <a class="reception-file-down-btn" href="<%=contextPath %>/<%=rfile.getPath() %>/<%=rfile.getChangeName() %>" download>다운로드</a>
+	                                </div>
+	                            </label>
+	                            <p class="recept-file-originName" style="display : inline-block"><%=rfile.getOrgName() %></p>
+	                        </div>
+                        <% } %>
                     </div>
                 </div>
                 <hr>
                 <div class="recept-answer-content">
                     <h4 class="recept-answer-content-title">답변</h4>
                     <div class="recpet-answer-content-part">
-                        <textarea class="recpet-answer-content-text" id="recpet-answer-content-text" rows="7" onclick="this.select()" onfocus="this.select()" readonly><%=r.getReply() %></textarea>
+                        <textarea class="recpet-answer-content-text" id="recpet-answer-content-text" rows="7" onclick="this.select()" onfocus="this.select()" readonly></textarea>
+                    	<script>
+                    		<% if(r.getReply()!=null){ %>
+		                        let text2 = "<%=r.getReply()%>".replaceAll("<br>", "\r\n");
+					        	$("#recpet-answer-content-text").val(text2);
+				        	<% } %>
+                        </script>
                     </div>
                 </div>
     
@@ -124,7 +146,7 @@
                     <div class="mb-3 row">
                         <label class="col-sm-2 col-form-label">파일첨부</label>
                         <div class="col-sm-8">
-                            <input type="file" class="form-control" id="recept-form-file" name="recept-form-file">
+                            <input type="file" class="form-control" id="recept-form-file" name="recept-form-file" accept="image/jpeg, image/png, .txt">
                         </div>
                     </div>
                     <div class="mb-3 row recept-right-info-container">

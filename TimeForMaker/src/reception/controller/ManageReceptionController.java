@@ -9,25 +9,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import common.model.vo.Member;
 import common.model.vo.PageInfo;
 import reception.model.vo.Reception;
 import reception.service.ReceptionService;
 
 /**
- * Servlet implementation class MyReception
+ * Servlet implementation class ManageReceptionController
  * 
- * 사용자 측면 문의 서비스(문의게시판, 문의폼)
- * -get 방식 요청시 문의 게시판 원하는 페이지 이동
+ * 관리자 페이지
+ * -모든 회원 문의 목록 게시판
  */
-@WebServlet("/myReception")
-public class MyReceptionController extends HttpServlet {
+@WebServlet("/manageReception")
+public class ManageReceptionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyReceptionController() {
+    public ManageReceptionController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,20 +35,17 @@ public class MyReceptionController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 문의 내역
-		String category = request.getParameter("category")==null?"선택":request.getParameter("category");
-		ArrayList<Reception> list = new ArrayList();
-		Reception r = new Reception(((Member)request.getSession().getAttribute("loginUser")).getUserId(), category);
-		System.out.println(r.getUserId());
-		
+		String category = request.getParameter("category")==null?"전체":request.getParameter("category");
+		String status = request.getParameter("status")==null?"대기":request.getParameter("status");
 		int currentPage = request.getParameter("page")==null?1:Integer.parseInt(request.getParameter("page"));
+		
+		System.out.println(category + " " + status);
+		
 		int listCount=0;
 		
 		switch(category) {
-		case "선택" : case "전체" : listCount = new ReceptionService().countAllReceptionList(r); break;
-		case "계정" : listCount = new ReceptionService().countReceptionList(r); break;
-		case "예약" : listCount = new ReceptionService().countReceptionList(r); break;
-		case "기타" : listCount = new ReceptionService().countReceptionList(r); break;
+		case "전체" : listCount = new ReceptionService().countAllMemberReceptionList(status); break;
+		case "계정" : case "예약" : case "기타" : listCount = new ReceptionService().countMemberReceptionList(category, status); break;
 		}
 		
 		int pageLimit = 5;
@@ -59,19 +55,21 @@ public class MyReceptionController extends HttpServlet {
 		int endPage = (startPage + pageLimit -1)>maxPage ? maxPage : (startPage + pageLimit -1);
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
+		ArrayList<Reception> list = null;
 		
 		switch(category) {
-		case "선택" : case "전체" : list = new ReceptionService().selectAllReceptionList(pi, r); break;
-		case "계정" : list = new ReceptionService().selectReceptionList(pi, r); break;
-		case "예약" : list = new ReceptionService().selectReceptionList(pi, r); break;
-		case "기타" : list = new ReceptionService().selectReceptionList(pi, r); break;
+		case "전체" : list = new ReceptionService().selectAllMemberReceptionList(pi, status); break;
+		case "계정" : case "예약" : case "기타" : list = new ReceptionService().selectMemberReceptionList(pi, category, status); break;
 		}
+		System.out.println("listcount : "+listCount);
+		System.out.println("list==null? "+(list==null));
 		
-		//request.setAttribute("category", category);
-		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
-		request.setAttribute("category", category);
-		request.getRequestDispatcher("views/user/receptionBoard.jsp").forward(request, response);
+		request.setAttribute("pi", pi);
+//		request.setAttribute("category", category);
+//		request.setAttribute("status", status);
+		
+		request.getRequestDispatcher("views/manager/ManagerReceptionBoard.jsp").forward(request, response);
 	}
 
 	/**

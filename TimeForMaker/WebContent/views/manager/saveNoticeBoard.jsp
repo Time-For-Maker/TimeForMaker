@@ -48,7 +48,7 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item list-group-title"><span>고객센터</span></li>
                 <li class="list-group-item list-group-sub side-menu-selected"><a href="<%=contextPath%>/noticeBoard">공지사항</a></li>
-                <li class="list-group-item list-group-sub"><a href="<%=contextPath%>/receptionManage">회원 문의</a></li>
+                <li class="list-group-item list-group-sub"><a href="<%=contextPath%>/manageReception">회원 문의</a></li>
               </ul>
         </div>
         <!-- Close Side-Menu -->
@@ -68,15 +68,18 @@
                 </thead>
                 <tbody>
                 	<!-- href 수정 필요(현재는 공지폼으로 연동되어 있음 -> 공지 작성폼으로) -->
-                	<% for(int i=0; i<10; i++) { %>
-	                   	<% for(Notice n : list){ %>
-                    		<tr>
+                	<% int i =0; %>
+                	<% if(list!=null) { %>
+	                	<% for(Notice n : list){ %>
+	                   		<tr>
 		                        <th scope="row"><%=n.getRowNum() %></th>
 		                        <td><%=n.getDate() %></td>
-		                        <td colspan="2"><a href="<%=contextPath %>/uploadNotice?no=<%=n.getRowNum() %>"><%=n.getTitle() %></a></td>
+		                        <td colspan="2"><a href="<%=contextPath %>/uploadNotice?no=<%=n.getNoticeNo() %>"><%=n.getTitle() %></a></td>
 		                    </tr>
-		                    <% continue; %>
-                   		<% } %>
+		                    <% i++; %>
+	                 	<% } %>
+                 	<% } %>
+                	<% for(; i<10; i++) { %>
                    		<tr>
 	                        <th scope="row"></th>
 	                        <td></td>
@@ -143,8 +146,8 @@
 	            <button type="button" class="btn btn-outline-dark recept-alert-box-close">X</button>
 	            <span><%=session.getAttribute("msg") %></span>
 	        </div>
-        <% } %>
         <% session.removeAttribute("msg"); %>
+        <% } %>
         <!-- Close Alert Box -->
     </div>
     

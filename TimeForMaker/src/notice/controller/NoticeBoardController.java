@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import common.model.vo.Member;
 import common.model.vo.PageInfo;
 import notice.model.vo.Notice;
 import notice.service.NoticeService;
@@ -36,6 +37,7 @@ public class NoticeBoardController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String category = request.getParameter("category")==null? "전체" : request.getParameter("category");
 		String keyword = request.getParameter("keyword");
+		// 해당 경로로 처음 요청올 때는 null이나, 검색어 없이 폼 전송해도 null이 아님(len=0)
 		
 		ArrayList<Notice> imList = new NoticeService().selectImportantNotice();
 		ArrayList<Notice> list = null;
@@ -57,9 +59,17 @@ public class NoticeBoardController extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
-		
+//		System.out.print("keyword is null? : ");
+//		System.out.println(keyword==null);
+//		System.out.println(keyword!=null);
+//		System.out.println("keyword : "+keyword);
+//		System.out.println("keyword == ' '"+keyword==" ");
+//		if(keyword!=null) {
+//			System.out.println("keyword len" + keyword.length());
+//		}
 		/* 조회결과에서 시작~끝 범위에 해당하는 공지만 셀렉해옴 */
-		if(category=="전체"|| (category != "전체" && keyword==null)) {
+		if(category=="전체"|| (category != "전체" && keyword.length()==0)) {
+			System.out.println("키워드 null임");
 			list = new NoticeService().selectNormNoticeList(pi);
 		}else{
 			switch(category) {
@@ -68,6 +78,12 @@ public class NoticeBoardController extends HttpServlet {
 			case "제목 및 내용": list = new NoticeService().searchNotice(pi, keyword); break;
 			}
 		}
+		
+		/* 임의로 로그인 멤버 지정 */
+		 Member m = new NoticeService().login();
+		 request.getSession().setAttribute("loginUser", m);
+		 System.out.println(m.getUserId()); System.out.println(m.getManagerType());
+		/* --------------------- */
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("imList", imList);

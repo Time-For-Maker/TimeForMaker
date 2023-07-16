@@ -1,7 +1,6 @@
 package reception.service;
 
-import static common.JDBCTemplate.close;
-import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -9,6 +8,7 @@ import java.util.ArrayList;
 import common.model.vo.PageInfo;
 import reception.model.dao.ReceptionDao;
 import reception.model.vo.Reception;
+import reception.model.vo.ReceptionFile;
 
 public class ReceptionService {
 
@@ -73,6 +73,101 @@ public class ReceptionService {
 		
 		close(conn);
 		
+		return result;
+	}
+	
+	public int submitReception(Reception r, ReceptionFile rfile) {
+		Connection conn = getConnection();
+		
+		// 문의 내용
+		int result1 = new ReceptionDao().submitReception(conn, r);
+		// 첨부파일
+		int result2 = 1;
+		if(rfile!=null) {
+			result2 = new ReceptionDao().submitReceptionFile(conn, rfile, r);
+		}
+		
+		if(result1*result2>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result1*result2;
+	}
+	
+	public int countAllMemberReceptionList(String status) {
+		Connection conn = getConnection();
+		
+		int result = new ReceptionDao().countAllMemberReceptionList(conn, status);
+		
+		close(conn);
+		
+		return result;
+	}
+	
+	public int countMemberReceptionList(String category, String status) {
+		Connection conn = getConnection();
+
+		int result = new ReceptionDao().countMemberReceptionList(conn, category, status);
+		
+		close(conn);
+		
+		return result;
+	}
+	
+	public ArrayList<Reception> selectAllMemberReceptionList(PageInfo pi, String status){
+		Connection conn = getConnection();
+
+		ArrayList<Reception> list = new ReceptionDao().selectAllMemberReceptionList(conn, pi, status);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList<Reception> selectMemberReceptionList(PageInfo pi, String category, String status){
+		Connection conn = getConnection();
+
+		ArrayList<Reception> list = new ReceptionDao().selectMemberReceptionList(conn, pi, category, status);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public Reception selectMemberReception(String no) {
+		Connection conn = getConnection();
+
+		Reception result = new ReceptionDao().selectMemberReception(conn, no);
+		
+		close(conn);
+		
+		return result;
+	}
+	
+	public ReceptionFile selectMemberReceptionFile(String no) {
+		Connection conn = getConnection();
+
+		ReceptionFile result = new ReceptionDao().selectMemberReceptionFile(conn, no);
+		
+		close(conn);
+		
+		return result;
+	}
+	
+	public int insertReceptionReply(Reception reply) {
+		Connection conn = getConnection();
+
+		int result = new ReceptionDao().insertReceptionReply(conn, reply);
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		System.out.println("Service : "+result);
 		return result;
 	}
 }

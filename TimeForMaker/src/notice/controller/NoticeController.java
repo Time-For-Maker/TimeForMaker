@@ -33,10 +33,12 @@ public class NoticeController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int no = Integer.parseInt(request.getParameter("no"));
+		// int no = Integer.parseInt(request.getParameter("no").substring(1));
+		
+		int no =Integer.parseInt(request.getParameter("no"));
+		String impt = request.getParameter("impt");
 		// 이전글, 현재글, 다음글 순으로 리스트에 담기
 		Notice[] list = new Notice[3];
-
 		for(int i=0; i<3; i++) {
 			int number=0;
 			
@@ -45,7 +47,9 @@ public class NoticeController extends HttpServlet {
 			case 1 : number = no; break;
 			case 2 : number = no+1; break;
 			}
-			list[i] = new NoticeService().selectUploadeNotice(number);
+			list[i] = new NoticeService().selectUploadeNotice(number, impt);
+			if(list[i]!=null) {
+			}
 		}
 		
 		request.setAttribute("list", list);

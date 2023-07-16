@@ -15,7 +15,10 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import com.oreilly.servlet.MultipartRequest;
 
 import common.ReceptionFileRenamePolicy;
+import common.model.vo.Member;
 import reception.model.vo.Reception;
+import reception.model.vo.ReceptionFile;
+import reception.service.ReceptionService;
 
 /**
  * Servlet implementation class UploadReceptionController
@@ -57,45 +60,37 @@ public class UploadReceptionController extends HttpServlet {
 			
 			// 2. 전달된 파일명 수정 작업 후 서버에 업로드
 			MultipartRequest multi = new MultipartRequest(request, savePath, maxSize, "UTF-8", new ReceptionFileRenamePolicy());
-			
+			System.out.println(((Member)session.getAttribute("loginUser")).getUserId());
 			// 3. DB에 전달할 값 추출
-			Reception r = new Reception((String)session.getAttribute("userID"), multi.getParameter("recept-form-category")); // userId & category 생성자
+			Reception r = new Reception(((Member)session.getAttribute("loginUser")).getUserId(), multi.getParameter("recept-form-category")); // userId & category 생성자
 			r.setTitle(multi.getParameter("recept-form-title"));
-			r.setText(multi.getParameter("recept-form-content"));
+			r.setText(multi.getParameter("recept-form-content").replaceAll("\r\n", "<br>"));
 			
 			// 첨부파일 (1개만 가능)
 			// recept-form-file
-			Enumeration files = multi.getFileNames();
-	        String key =(String)files.nextElement();
-	 
-	        String orgName = multi.getOriginalFileName(key);
-	        String newName = multi.getFilesystemName(key);
+			ReceptionFile rfile = null;
 			
-			
-			
-			/*
-			 * if(multi.getOriginalFileName("recept-form-file")!=null && ) { // 첨부파일이 존재할 경우
-			 * // Attachment 객체 생성 + 원본명, 수정명, 저장경로, 파일레벨 담아서 list에 넣기 Attachment at = new
-			 * Attachment(); at.setOriginName(multi.getOriginalFileName(key));
-			 * at.setChangeName(multi.getFilesystemName(key));
-			 * at.setFilePath("resources/thumnail_upfiles/"); }
-			 */
-			
-			int result = new BoardService().insertThumnailBoard(b, list);
-			
-			if(result>0) { // 성공시 -> list.th 요청 -> 사진게시판 리스트 이미지
-				request.getSession().setAttribute("alertMsg", "성공적으로 업로드 되었습니다.");
-				response.sendRedirect(request.getContextPath()+"/list.th"); // 사진게시판 리스트 작업 완료후 변경예정
-			}else { // 실패 -> 에러페이지
-				request.setAttribute("errorMsg",  "사진게시판 업로드 실패");
-				request.getRequestDispatcher("/views/common/errorPage.jsp").forward(request, response);
+			try { // multi에 파일이 있을 경우
+				Enumeration files = multi.getFileNames();
+		        String key =(String)files.nextElement();
+		 
+		        String orgName = multi.getOriginalFileName(key);
+		        String newName = multi.getFilesystemName(key);
+		        if(orgName!=null) {
+		        	rfile = new ReceptionFile(orgName, newName, "assets/reception_file/");		        	
+		        }
+			}catch(Exception e) {
+				
 			}
+			int result = new ReceptionService().submitReception(r, rfile);
+			
+			if(result>0) { // 성공
+				request.getSession().setAttribute("msg", "회원님의 문의가 접수되었습니다. 빠른 시일 내에 응답할 수 있도록 노력하겠습니다.");
+			}else { // 실패
+				request.getSession().setAttribute("msg",  "문의를 접수하는 데에 실패했습니다. 다시 시도해주세요.");
+			}
+			response.sendRedirect(request.getContextPath()+"/myReception"); 
 		}
-		
-		
-		
-		session.setAttribute("msg", "문의 접수를 완료했습니다. 빠른 답변을 받을 수 있도록 하겠습니다.");
-		response.sendRedirect(request.getContextPath()+"/myReception");
 	}
 
 }

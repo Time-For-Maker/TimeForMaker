@@ -1,4 +1,4 @@
-<%@ page import="java.util.ArrayList, notice.model.vo.Notice, common.model.vo.PageInfo" %>
+<%@ page import="java.util.ArrayList, notice.model.vo.Notice, common.model.vo.PageInfo, common.model.vo.Member" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -6,7 +6,8 @@
 
 	// loginUser 세션에서 가져와야 함
 	// loginUser에서 관리자인지 회원인지 구분 필요
-	// Member loginUser = request.getSession().getAttribute("loginUser");
+	Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+	//System.out.println(loginUser.getManagerType()); --M
 	
 	// imList, list : 중요공지리스트, 일반공지리스트 -request로부터 받아야함
 	ArrayList<Notice> imList = (ArrayList<Notice>)request.getAttribute("imList");
@@ -19,7 +20,8 @@
 	int endPage     = pi.getEndPage();
 	int maxPage     = pi.getMaxPage(); 
 	int pageLimit = pi.getPageLimit();
-	String category = request.getParameter("category");
+	
+	String category = request.getParameter("category")==null? "전체" : request.getParameter("category");
 	String keyword = request.getParameter("keyword");
 %>
 <!DOCTYPE html>
@@ -31,12 +33,12 @@
 
 <!-- load css -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<link rel="stylesheet" href="/TimeForMaker/assets/css/templatemo.css" type="text/css">
-<link rel="stylesheet" href="/TimeForMaker/assets/css/customer-center.css" type="text/css">
+<link rel="stylesheet" href="<%=contextPath %>/assets/css/templatemo.css" type="text/css">
+<link rel="stylesheet" href="<%=contextPath %>/assets/css/customer-center.css" type="text/css">
 
 <!-- load fonts style -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap" type="text/css">
-<link rel="stylesheet" href="/TimeForMaker/assets/css/fontawesome.min.css" type="text/css">
+<link rel="stylesheet" href="<%=contextPath %>/assets/css/fontawesome.min.css" type="text/css">
 
 <!-- load script -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
@@ -57,15 +59,17 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item list-group-title"><span>고객센터</span></li>
                 <% 
+                	// session.removeAttribute("loginUser");
+                
                 	String[] noticeHref = {"공지사항", "noticeBoard"};
                 	String[] receptHref = new String[2];
                 	
-                	if(loginUser.managerType="Y"){
+                	if(loginUser!=null && loginUser.getManagerType().equals("M")){
                 		receptHref[0] = "회원 문의";
-                		receptHref[1] = "views/manager/managerReceptionBoard.html";
+                		receptHref[1] = contextPath+"/manageReception";
                 	}else{
                 		receptHref[0] = "1:1 문의";
-                		receptHref[1] = "views/user/receptionBoard.html";
+                		receptHref[1] = contextPath+"/myReception";
                 	}
                 %>
                 <li class="list-group-item list-group-sub side-menu-selected"><a href="<%=contextPath %>/<%=noticeHref[1] %>"><%=noticeHref[0] %></a></li>
@@ -80,7 +84,7 @@
             <h3 align="center" class="customer-center-title"><%=noticeHref[0] %></h3>
             <!-- Close Notice Page Title -->
 			
-			<% if(loginUser.managerType="Y"){ %>
+			<% if(loginUser!=null && loginUser.getManagerType().equals("M")){ %>
 	            <!-- 관리자용 버튼 - 임시저장목록 -->
 	            <div class="d-grid gap-2 d-md-flex justify-content-md-end notice-save-board-btn notice-manager-btn">
 	            
@@ -111,20 +115,23 @@
                    		for(Notice n : imList){ %>
                    			<tr class="important-notice">
 		                        <th scope="row"><%=n.getRowNum() %></th>
-		                        <td colspan="2"><a href="<%=contextPath %>/notice?no=<%=n.getRowNum() %>"><%=n.getTitle() %></a></td>
+		                        <td colspan="2"><a href="<%=contextPath %>/notice?no=<%=n.getRowNum() %>&impt=<%=n.getImpt()%>"><%=n.getTitle() %></a></td>
 		                        <td><%=n.getDate() %></td>
                    			</tr>
                    		<% i++;
                    			} %>
                    	<%	} %>
-                   	<% for(Notice n : list){ %>
-                   		<tr>
-	                        <th scope="row"><%=n.getRowNum() %></th>
-	                        <td colspan="2"><a href="<%=contextPath %>/notice?no=<%=n.getRowNum() %>"><%=n.getTitle() %></a></td>
-	                        <td><%=n.getDate() %></td>
-	                    </tr>
-	                    <% i++; %>
-                 	<% } %>
+                   	<% if(list!=null){ %>
+	                   	<% for(Notice n : list){ %>
+	                   		<tr>
+		                        <th scope="row"><%=n.getRowNum() %></th>
+		                        <td colspan="2"><a href="<%=contextPath %>/notice?no=<%=n.getRowNum() %>&impt=<%=n.getImpt()%>"><%=n.getTitle() %></a></td>
+		                        <td><%=n.getDate() %></td>
+		                    </tr>
+		                    <% i++; %>
+	                 	<% } %>
+                   	<% } %>
+                   	
                    	<% for(; i<10; i++) { %>
                    		<tr>
 	                        <th scope="row"></th>
@@ -156,8 +163,13 @@
                       </ul>
                   </div>
                   <input type="text" maxlength="5" placeholder="검색어입력">
+                  <script>
+                  	<% if(keyword!=null){ %>
+                  		$("#notice-search-bar input").val("<%=keyword%>");
+                  	<% } %>
+                  </script>
 
-				<% if(loginUser.managerType="Y"){ %>
+				<% if(loginUser!=null && loginUser.getManagerType().equals("M")){ %>
                    <!-- 관리자용 버튼 - 공지작성 (공지작성폼 페이지 연결 필요) -->
                    <div class="d-grid gap-2 d-md-flex justify-content-md-end notice-write-btn notice-manager-btn">
                        <button type="button" class="btn" onclick="location.href='<%=contextPath%>/uploadNotice'">작성하기</button>
@@ -184,11 +196,11 @@
 	              <% } %>
 	              
 	              <% for(int p = startPage; p<= endPage; p++){ %>
-	              	<% if(p==currentPage) { %>
-	                  <li class="page-item notice-recept-page-clicked"><a class="page-link" href="<%=contextPath%>/noticeBoard?page=<%=p %>$category=<%=category %>&keyword=<%=keyword %>" onclick="return false;"><%=p %></a></li>
-	              	<% } else { %>
-	                  <li class="page-item"><a class="page-link" href="<%=contextPath%>/noticeBoard?page=<%=p %>$category=<%=category %>&keyword=<%=keyword %>"><%=p %></a></li>	              	
-	              	<% } %>
+		              	<% if(p==currentPage) { %>
+			                  <li class="page-item notice-recept-page-clicked"><a class="page-link" href="<%=contextPath%>/noticeBoard?page=<%=p %>$category=<%=category %>&keyword=<%=keyword %>" onclick="return false;"><%=p %></a></li>
+		              	<% } else { %>
+			                  <li class="page-item"><a class="page-link" href="<%=contextPath%>/noticeBoard?page=<%=p %>$category=<%=category %>&keyword=<%=keyword %>"><%=p %></a></li>	              	
+		              	<% } %>
 	              <% } %>
                   
                   <% if(maxPage != pageLimit) { %>
@@ -216,8 +228,8 @@
 	            <button type="button" class="btn btn-outline-dark recept-alert-box-close">X</button>
 	            <span><%=session.getAttribute("msg") %></span>
 	        </div>
+	        <% session.removeAttribute("msg"); %>
         <% } %>
-        <% session.removeAttribute("msg"); %>
         <!-- Close Alert Box -->
     </div>
 	<!-- Close 공지게시판 -->
@@ -263,13 +275,14 @@
     <!-- End Footer -->
 	
 	<!-- Start Script -->
-    <script src="/TimeForMaker/assets/js/templatemo.js"></script>
-    <script src="/TimeForMaker/assets/js/customer-center.js"></script>
+	<script src="<%=contextPath %>/assets/js/jquery-1.11.0.min.js"></script>
+	<script src="<%=contextPath %>/assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="<%=contextPath %>/assets/js/templatemo.js"></script>
+    <script src="<%=contextPath %>/assets/js/customer-center.js"></script>
     <script>
 
         /* 게시판에 빈 라인 hover삭제 */
         $("#notice-board-area tbody tr").hover(function(){
-            // console.log($(this).children("th").text());
             if($(this).children("th").text()!=""){
                 $(this).css("background-color","beige");
             }
@@ -314,8 +327,7 @@
             if(key.keyCode==13){
                 let category = $("#navbarNavDarkDropdown button span").text();
                 let keyword = $(this).val();
-                let url=`noticeBoard?category=${category}&keyword=${keyword}`;
-                // console.log(url);
+                let url="<%=contextPath%>/noticeBoard?category="+category+"&keyword="+keyword;
                 location.href=url;
             }
         });

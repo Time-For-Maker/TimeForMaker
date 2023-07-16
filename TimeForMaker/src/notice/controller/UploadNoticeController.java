@@ -41,7 +41,7 @@ public class UploadNoticeController extends HttpServlet {
 		Notice n = null;
 		
 		if(no!=null) {
-			n = new NoticeService().selectSavedNotice(Integer.parseInt(no));
+			n = new NoticeService().selectSavedNotice(no);
 		}
 		request.setAttribute("n", n);
 		request.getRequestDispatcher("views/manager/noticeEnrollForm.jsp").forward(request, response);
@@ -52,11 +52,14 @@ public class UploadNoticeController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// String no = request.getParameter("no");
-		String no = request.getParameter("notice-form-no");
-		char agree = request.getParameter("notice-form-agree").charAt(0);
+		System.out.println("서블릿 접속");
+		String no = request.getParameter("notice-form-no").isEmpty()?null:request.getParameter("notice-form-no");
+		char agree = request.getParameter("notice-form-agree-hdn").charAt(0);
 		String title = request.getParameter("notice-form-title");
-		String content = request.getParameter("notice-form-content");
+		String content = request.getParameter("notice-form-content").replaceAll("\r\n", "<br>");
 		char save = request.getParameter("save").charAt(0);
+		
+		System.out.println("no : "+no+" agree : "+agree+" title : "+title+" content : "+content+" save : "+save);
 		
 		Notice n = new Notice(title, content, save, agree);
 		int result;
@@ -73,18 +76,21 @@ public class UploadNoticeController extends HttpServlet {
 			if(no!=null) { // 기존에 있던 공지 로드 후 수정/공지 게시판으로 업로드
 				n.setNoticeNo(no);
 				result = new NoticeService().updateNotice(n);
+				System.out.println("no==null? : "+no);
 			}else { // 새로 작성하던 글 업로드 / 임시저장
 				result = new NoticeService().insertNotice(n);
 			}
 		}
-		
+		System.out.println(result);
 		if(result>0) { // 성공적으로 작업 수행한 경우
 			if(save=='Y') { // 임시저장
 				session.setAttribute("msg", "성공적으로 임시저장하였습니다.");
 				response.sendRedirect(request.getContextPath()+"/saveNoticeBoard");
+				return;
 			}else { // 공지 업로드
 				session.setAttribute("msg", "성공적으로 업로드하였습니다.");
 				response.sendRedirect(request.getContextPath()+"/noticeBoard");
+				return;
 			}
 		}else {
 			if(save=='Y') {

@@ -152,7 +152,7 @@ Custom Css
 .notice-board-area>.notice-content, .notice-board-area>.notice-content-nav{
     width: 100%;
     position: relative;
-    left: 25%;
+    /*left: 25%;*/
     text-align: left;
 }
 
@@ -204,6 +204,12 @@ Custom Css
 
 .notice-content-part textarea, .recpet-content-part pre{
     text-align: left;
+    width: 100%;
+    height: 90%;
+    border: none;
+    resize: none;
+    cursor: context-menu;
+    &:focus{outline: none;}
 }
 
 .notice-board-area .notice-content-nav{
@@ -224,9 +230,10 @@ Custom Css
 
 .notice-board-area>.btn{
     position: relative;
-    left: 70%;
-    width:10%;
+    /* left: 70%; */
+    width:15%;
     margin-top: 5%;
+    padding-top: 1%;
 }
 
 #link-copy-modal{
@@ -312,6 +319,7 @@ Custom Css
     border-bottom: 1px solid black;
     width: 100%;
     margin-bottom: 2%;
+    display: flex;
 }
 
 .recept-sub-menu-item{
@@ -590,7 +598,7 @@ Custom Css
     text-align: center;
     vertical-align: middle;
     padding: 2%;
-    /* display: none; */
+    display: none;
 }
 
 .recept-alert-box-close{
@@ -673,3 +681,36 @@ Custom Css
 
 .recept-answer-content{margin-bottom: 0;}
 /* Close 회원 문의 답변 */
+
+/* Start 문의 파일첨부 */
+.reception-file-area{text-align: left; width: 100%;}
+
+.recept-file-upload-btn {
+    width: 10vw;
+    padding: 5% 0;
+    background: transparent;
+    border: 1px solid rgb(77,77,77);
+    border-radius: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+
+    &:hover {
+      background: rgb(77,77,77);
+      color: #fff;
+    }
+}
+
+.recept-file-originName{
+    margin-bottom: 0;
+}
+
+.reception-file-down-btn{
+    color: black; 
+    text-decoration: none;
+    &:hover{color: yellow}
+}
+/* Close 문의 파일첨부 */

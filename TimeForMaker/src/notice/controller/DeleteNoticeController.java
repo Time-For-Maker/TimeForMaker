@@ -42,12 +42,12 @@ public class DeleteNoticeController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String no = request.getParameter("notice-form-no");
+		String no = request.getParameter("notice-form-no").isEmpty()?null:request.getParameter("notice-form-no");
 		
 		HttpSession session = request.getSession();
 		
 		if(no!=null) {
-			int result = new NoticeService().deleteNotice(Integer.parseInt(no));
+			int result = new NoticeService().deleteNotice(no);
 			
 			if(result>0) {
 				session.setAttribute("msg", "저장하신 공지를 삭제했습니다.");
@@ -60,7 +60,7 @@ public class DeleteNoticeController extends HttpServlet {
 			session.setAttribute("msg", "작성 중인 공지를 삭제했습니다.");
 		}
 		
-		response.sendRedirect(request.getContextPath()+"/uploadNotice");
+		response.sendRedirect(request.getContextPath()+"/saveNoticeBoard");
 	}
 
 }

@@ -8,24 +8,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import common.model.vo.Member;
 import reception.model.vo.Reception;
 import reception.model.vo.ReceptionFile;
 import reception.service.ReceptionService;
 
 /**
- * Servlet implementation class ReceptionController
+ * Servlet implementation class CheckReception
  * 
- * 관리자 페이지
- * -회원 문의글 상세보기
+ * 사용자가 문의 목록에서 특정 공지글 확인하고자 요청할 시 처리
  */
-@WebServlet("/reception")
-public class ReceptionController extends HttpServlet {
+@WebServlet("/myReceptionDetail")
+public class MyReceptionDetailController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReceptionController() {
+    public MyReceptionDetailController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,14 +34,24 @@ public class ReceptionController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String no = request.getParameter("no");
+		int no = Integer.parseInt(request.getParameter("no"));
+		String category = request.getParameter("category");
 		
-		Reception r = new ReceptionService().selectMemberReception(no);
-		ReceptionFile rfile = new ReceptionService().selectMemberReceptionFile(no);
+		Reception r = new Reception(((Member)request.getSession().getAttribute("loginUser")).getUserId(), no); 
+		// id, 조회된 결과의 번호
+		Reception result = null;
 		
-		request.setAttribute("r", r);
+		switch(category) {
+		case "선택" : case "전체" : result = new ReceptionService().selectAllReception(r); break;
+		case "계정" : case "예약" : case "기타" : result = new ReceptionService().selectReception(r, category); break;
+		} 
+		
+		System.out.println(result.getReply());
+		ReceptionFile rfile = new ReceptionService().selectMemberReceptionFile(result.getReceptionNo());
+		
+		request.setAttribute("r", result);
 		request.setAttribute("rfile", rfile);
-		request.getRequestDispatcher("views/manager/ManagerReceptionDetail.jsp").forward(request, response);
+		request.getRequestDispatcher("views/user/userReception.jsp").forward(request, response);
 	}
 
 	/**

@@ -38,7 +38,7 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item list-group-title"><span>고객센터</span></li>
                 <li class="list-group-item list-group-sub side-menu-selected"><a href="<%=contextPath %>/noticeBoard">공지사항</a></li>
-                <li class="list-group-item list-group-sub"><a href="<%=contextPath %>/receptionManage">회원 문의</a></li>
+                <li class="list-group-item list-group-sub"><a href="<%=contextPath %>/manageReception">회원 문의</a></li>
             </ul>
         </div>
         <!-- Close Side-Menu -->
@@ -50,11 +50,12 @@
             <!-- Close Recept Page Title -->
 
             <div>
-                <form class="notice-form" method="post" enctype="multipart/form-data">
+                <form class="notice-form" method="post">
                     <div class="mb-3 row">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-8">
                             <input type="hidden" id="notice-form-no" name="notice-form-no"/>
+                            <input type="hidden" id="notice-form-agree-hdn" name="notice-form-agree-hdn">
                             <input type="checkbox" id="notice-form-agree" name="notice-form-agree"><label for="notice-form-agree">중요공지</label>
                         </div>
                     </div>
@@ -70,13 +71,7 @@
                             <textarea class="form-control" id="notice-form-content" rows="13" name="notice-form-content" placeholder="내용을 입력해주세요" required></textarea>
                         </div>
                     </div>
-                    <!-- <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">파일첨부</label>
-                        <div class="col-sm-8">
-                            <input type="file" class="form-control" id="recept-form-file" name="recept-form-file">
-                        </div>
-                    </div> -->
-                    <button class="btn btn-primary notice-form-delete-btn" type="button" formaction="deleteNotice">삭제하기</button>
+                    <button class="btn btn-primary notice-form-delete-btn" type="submit" formaction="deleteNotice">삭제하기</button>
                     <button class="btn btn-primary notice-form-save-btn" type="submit" formaction="uploadNotice" name="save" value="Y">임시저장</button>
                     <button class="btn btn-primary notice-form-btn" type="submit" formaction="uploadNotice" name="save" value="N">접수하기</button>
                     <!-- 
@@ -90,36 +85,38 @@
         
         <script>
 	        <% if(n!=null){ %>
-		        $(function(){
 		        	<% if(n.getImpt()=='Y'){ %>
 		        		$("#notice-form-agree").prop("checked", true);
 		        	<% } %>
-			        $("#notice-form-title").val(<%=n.getTitle() %>);
-		        	$("#notice-form-content").val(<%=n.getContent() %>);
-		        	$(".notice-form-delete-btn").attr("formaction", "<%=contextPath%>/uploadNotice?no=<%=n.getRowNum()%>");
-		        	$(".notice-form-save-btn, notice-form-btn").attr("formaction", "<%=contextPath%>/uploadNotice?no=<%=n.getRowNum()%>");
-		        	$("#notice-form-no").val(<%= n.getNoticeNo()%>);
-		        });
+		        	$("#notice-form-title").val("<%=n.getTitle() %>");
+		        	let text = "<%=n.getContent()%>".replaceAll("<br>", "\r\n");
+		        	$("#notice-form-content").val(text);
+		        	$(".notice-form-delete-btn").attr("formaction", "<%=contextPath%>/deleteNotice?no=<%=n.getNoticeNo()%>");
+		        	$(".notice-form-save-btn, notice-form-btn").attr("formaction", "<%=contextPath%>/uploadNotice?no=<%=n.getNoticeNo()%>");
+		        	$("#notice-form-no").val("<%= n.getNoticeNo()%>");
 	        <% } %>
 	        
-	        $(".notice-form-btn").click(function(){
+	        $(".notice-form-btn, .notice-form-save-btn, notice-form-delete-btn").click(function(){
+	        	let val;
 	            if($("#notice-form-agree").is(":checked")){
-	                $("#notice-form-agree").val("Y");
+	                // $("#notice-form-agree").val("Y");
+	                val='Y';
 	            }else{
-	                $("#notice-form-agree").val("N");
+	                // $("#notice-form-agree").val("N");
+	                val='N';
 	            }
-	            // console.log($("#notice-form-agree").val());
+	            $("#notice-form-agree-hdn").val(val);
+	            console.log($("#notice-form-agree-hdn").val());
 	        });
         </script>
 
         <!-- Start Alert Box -->
-        <% if(session.getAttribute("msg")!=null){ %>
+        <% if(request.getAttribute("msg")!=null){ %>
 	        <div class="recept-alert-box">
 	            <button type="button" class="btn btn-outline-dark recept-alert-box-close">X</button>
-	            <span><%=session.getAttribute("msg") %></span>
+	            <span><%=request.getAttribute("msg") %></span>
 	        </div>
         <% } %>
-        <% session.removeAttribute("msg"); %>
         <!-- Close Alert Box -->
     </div>
     

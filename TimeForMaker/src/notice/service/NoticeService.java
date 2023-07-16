@@ -1,10 +1,14 @@
 package notice.service;
 
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.commit;
+import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import common.model.vo.Member;
 import common.model.vo.PageInfo;
 import notice.model.dao.NoticeDao;
 import notice.model.vo.Notice;
@@ -13,6 +17,17 @@ public class NoticeService {
 	
 	public NoticeService(){
 		
+	}
+	
+	// 로그인 임의 생성
+	public Member login() {
+		Connection conn = getConnection();
+		
+		Member m = new NoticeDao().login(conn);
+		
+		close(conn);
+		
+		return m;
 	}
 	
 	public ArrayList<Notice> selectAllUploadedNotice(){
@@ -95,17 +110,17 @@ public class NoticeService {
 		return list;
 	}
 	
-	public Notice selectUploadeNotice(int no) {
+	public Notice selectUploadeNotice(int no, String impt) {
 		Connection conn = getConnection();
 		
-		Notice n = new NoticeDao().selectUploadeNotice(conn, no);
+		Notice n = new NoticeDao().selectUploadeNotice(conn, no, impt);
 		
 		close(conn);
 		
 		return n;
 	}
 	
-	public Notice selectSavedNotice(int no) {
+	public Notice selectSavedNotice(String no) {
 		Connection conn = getConnection();
 		
 		Notice n = new NoticeDao().selectSavedNotice(conn, no);
@@ -143,11 +158,11 @@ public class NoticeService {
 		}
 		
 		close(conn);
-		
+		System.out.println("service result : "+result);
 		return result;
 	}
 	
-	public int deleteNotice(int no) {
+	public int deleteNotice(String no) {
 		Connection conn = getConnection();
 		
 		int result = new NoticeDao().deleteNotice(conn, no);

@@ -10,7 +10,8 @@
 	ArrayList<Reception> list = (ArrayList<Reception>)request.getAttribute("list");
 	// Reception r = (Reception)request.getAttribute("r");
 	
-	String category = request.getParameter("category")==null?"선택":request.getParameter("category");
+	//String category = request.getParameter("category")==null?"선택":request.getParameter("category");
+	String category = (String)request.getAttribute("category");
 	// 값을 받아올 것이므로 이후 삭제 필요
 	
 	// 페이지 정보
@@ -123,9 +124,15 @@
                       			<% for(Reception re : list){ %>
 	                        		<tr>
 		                                <th scope="row" height="40vh"><%=re.getRowNum() %></th>
-		                                <td colspan="2"><a href="<%=contextPath%>/reception?category=<%=category %>&no=<%=re.getRowNum()%>"><%=re.getTitle() %></a></td>
+		                                <td colspan="2"><a href="<%=contextPath%>/myReceptionDetail?category=<%=category %>&no=<%=re.getRowNum()%>"><%=re.getTitle() %></a></td>
 		                                <td><%=re.getUploadDate() %></td>
-		                                <td><%=re.getStatus() %></td>
+		                                <td>
+		                                	<% if(re.getStatus().equals("N")){ %>
+		                                		대기
+		                                	<% }else{ %>
+		                                		완료
+		                                	<% } %>
+		                                </td>
 		                            </tr>
 		                            <% i++; %>
                       			<% } %>
@@ -192,13 +199,12 @@
             <div class="recept-part2">
                 <form class="recept-form" action="uploadReception" method="post" enctype="multipart/form-data">
                     <div class="mb-3 row">
-                        <input type="text" hidden class="form-control-plaintext" id="recept-form-category" name="recept-form-category" value="m010101">
+                        <input type="text" hidden class="form-control-plaintext" id="recept-form-category" name="recept-form-category" value="">
 
                         <label class="col-sm-2 col-form-label">분류</label>
                         <div class="col-sm-7">
-                            <!-- <input type="text" class="form-control-plaintext" id="recept-form-category" name="recept-form-category" hidden required> -->
                             <nav class="navbar navbar-expand-lg" id="recept-form-bar" style="background-color: transparent;">
-                                <!-- script단에서 요청 (-> /recept 처리 필요) -->
+                                <!-- script단에서 요청 (-> /uploadReception 처리 필요) -->
                                 <div class="container-fluid">
                                     <div class="collapse navbar-collapse" id="navbarNavDarkDropdown2">
                                         <ul class="navbar-nav">
@@ -233,7 +239,7 @@
                     <div class="mb-3 row">
                         <label class="col-sm-2 col-form-label">파일첨부</label>
                         <div class="col-sm-8">
-                            <input type="file" class="form-control" id="recept-form-file" name="recept-form-file">
+                            <input type="file" class="form-control" id="recept-form-file" name="recept-form-file" accept="image/jpeg, image/png, .txt">
                         </div>
                     </div>
                     <div class="mb-3 row recept-right-info-container">
@@ -293,7 +299,7 @@
             <div class="row">
 
                 <div class="col-md-4 pt-5">
-                    <img src="../assets/img/메인로고.png" class="main_logo">
+                    <img src="<%=contextPath %>/assets/img/메인로고.png" class="main_logo">
                     <ul class="list-unstyled text-light footer-link-list">
                         <li>
                             <i class="fas fa-map-marker-alt fa-fw"></i>
@@ -334,9 +340,9 @@
 	    /* 문의 유형 선택 이벤트 */
 	    $("#recept-search-category-menu>li").click(function(){
 	        let value=$(this).text();
-	        $("#navbarNavDarkDropdown button span").text(value);
+	        $("#recept-search-bar button span").text(value);
 	
-	        let url=`myReception?category=${value}`;
+	        let url='myReception?category='+value;
 	        location.href=url;
 	    });
 	
