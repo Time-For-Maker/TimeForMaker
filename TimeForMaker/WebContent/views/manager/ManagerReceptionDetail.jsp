@@ -9,8 +9,6 @@
 	// Member loginUser = request.getSession().getAttribute("loginUser");
 	Reception r = (Reception)request.getAttribute("r");
 	ReceptionFile rfile = (ReceptionFile)request.getAttribute("rfile");
-	
-	String msg = (String)session.getAttribute("msg");
 %>
 <!DOCTYPE html>
 <html>
@@ -65,7 +63,7 @@
                             <p>회&nbsp;&nbsp;&nbsp;&nbsp;원<span><%=r.getUserId() %></span></p>
                             <p>접수일<span><%=r.getUploadDate() %></span></p>
                         </div>
-                        <textarea class="recpet-content-text" id="recpet-content-text" rows="15" onclick="this.select()" onfocus="this.select()" readonly><%=r.getText() %></textarea>
+                        <textarea class="recpet-content-text" id="recpet-content-text" rows="15" onclick="this.select()" onfocus="this.select()" readonly></textarea>
                     	
                     	<% if(rfile!=null){ %>
 	                    	<div class="reception-file-area">
@@ -86,8 +84,12 @@
                         <textarea class="recpet-answer-content-text" id="recpet-answer-content-text" rows="7" onclick="this.select()" onfocus="this.select()" required></textarea>
                     	
                     	<script>
+                    		let text = "<%=r.getText()%>".replaceAll("<br>", "\r\n");
+			        		$("#recpet-content-text").val(text);
+		               		
 		               		<% if(r.getReply()!=null){ %>
-		               			$("#recpet-answer-content-text").val(<%=r.getReply() %>);
+		               			let text2 = "<%=r.getReply()%>".replaceAll("<br>", "\r\n");
+		               			$("#recpet-answer-content-text").val(text2);
 		               		<% } %>
 		               	</script>
 		               	
@@ -99,7 +101,7 @@
         <!-- Close Manager Recept Board Detail Container -->
 
         <!-- Start Alert Box -->
-        <div class="recept-alert-box">
+        <div class="recept-alert-box" style="display:none;">
             <button type="button" class="btn btn-outline-dark recept-alert-box-close">X</button>
             <span></span>
         </div>
@@ -165,7 +167,7 @@
 	    
 	    /* 답변 등록 제출 */
 	    $(".recept-reply-btn").click(function(){
-            console.log($(".recpet-answer-content-text").val());
+            //console.log($(".recpet-answer-content-text").val());
             let text = $(".recpet-answer-content-text").val();
             $.ajax({
                 url:"replyReception",
@@ -179,7 +181,10 @@
                 	$(".recept-alert-box").css("display","block");
                 	$(".recept-alert-box>span").text(msg);
                 	
-               		location.href="<%=contextPath%>/manageReception";
+                	$(".recept-alert-box>button").click(function(){
+	               		location.href="<%=contextPath%>/manageReception";                		
+                	});
+                	
                 }/* ,
                 error : function(){
                 	$(".recept-alert-box").css("display","block");

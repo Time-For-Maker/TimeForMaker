@@ -85,7 +85,7 @@ public class UploadReceptionController extends HttpServlet {
 			int result = new ReceptionService().submitReception(r, rfile);
 			
 			if(result>0) { // 성공
-				request.getSession().setAttribute("msg", "회원님의 문의가 접수되었습니다. 빠른 시일 내에 응답할 수 있도록 노력하겠습니다.");
+				request.getSession().setAttribute("msg", "회원님의 문의가 접수되었습니다.");
 			}else { // 실패
 				request.getSession().setAttribute("msg",  "문의를 접수하는 데에 실패했습니다. 다시 시도해주세요.");
 			}

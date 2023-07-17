@@ -1,6 +1,6 @@
 <%@ page import="java.util.ArrayList, reception.model.vo.Reception, common.model.vo.PageInfo" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" isELIgnored="true"%>
 <%
 	String contextPath = request.getContextPath();
 
@@ -22,8 +22,6 @@
 	int endPage     = pi.getEndPage();
 	int maxPage     = pi.getMaxPage(); 
 	int pageLimit = pi.getPageLimit();
-	
-	String msg = (String)session.getAttribute("msg");
 %>
 <!DOCTYPE html>
 <html>
@@ -169,7 +167,7 @@
 			                       <!-- href="<%=contextPath%>/manageReception?page=<%=startPage+pageLimit%>" -->
 			                      <span aria-hidden="true">&raquo;</span>
 			                    </a>
-			                  <% } %>
+			                  <% }%>
 			                  </li>
 		                  <% } %>
 		                </ul>
@@ -182,16 +180,6 @@
         </div>
 
         <!-- Close Manager Recept Board Container -->
-
-        <!-- Start Alert Box -->
-        <% if(session.getAttribute("msg")!=null){ %>
-	        <div class="recept-alert-box">
-	            <button type="button" class="btn btn-outline-dark recept-alert-box-close">X</button>
-	            <span><%=session.getAttribute("msg") %></span>
-	        </div>
-        <% } %>
-        <% session.removeAttribute("msg"); %>
-        <!-- Close Alert Box -->
     </div>
     
     <!-- Close 회원문의 관리 게시판 -->
@@ -272,6 +260,10 @@
 	            if(index==4){
 	                $("#manager-recept-board-area tbody tr").eq(index).css("border-bottom","black");
 	            }
+	        }else{
+	        	if(index==4){
+	                $("#manager-recept-board-area tbody tr").eq(index).css("border-bottom","black");
+	            }
 	        }
 	    });
 	
@@ -311,8 +303,9 @@
 		  label.innerHTML = item.textContent;
 		  label.parentNode.classList.remove('active');
 		
-		  category = $(".manager-recept-category-select button").text();
-		  status = $(".manager-recept-status-select button").text();
+		  category = $(".manager-recept-selectBox button").eq(0).text();
+		  status = $(".manager-recept-selectBox button").eq(1).text();
+		  
 		  console.log(item.textContent);
 		
 		  url=`manageReception?category=${category}&status=${status}`;
@@ -320,8 +313,8 @@
 		};
 
         function moveReceptPage(page){
-	    	category = $(".manager-recept-category-select button").text();
-            status = $(".manager-recept-status-select button").text();
+	    	category = $(".manager-recept-selectBox button").eq(0).text();
+            status = $(".manager-recept-selectBox button").eq(1).text();
 
             url=`manageReception?category=${category}&status=${status}&page=${page}`;
             location.href=url;

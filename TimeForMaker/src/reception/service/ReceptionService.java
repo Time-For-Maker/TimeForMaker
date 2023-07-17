@@ -165,9 +165,8 @@ public class ReceptionService {
 		}else {
 			rollback(conn);
 		}
-		
 		close(conn);
-		System.out.println("Service : "+result);
+		
 		return result;
 	}
 }

@@ -33,12 +33,12 @@
 
 <!-- load css -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<link rel="stylesheet" href="/TimeForMaker/assets/css/templatemo.css" type="text/css">
-<link rel="stylesheet" href="/TimeForMaker/assets/css/customer-center.css" type="text/css">
+<link rel="stylesheet" href="<%=contextPath %>/assets/css/templatemo.css" type="text/css">
+<link rel="stylesheet" href="<%=contextPath %>/assets/css/customer-center.css" type="text/css">
 
 <!-- load fonts style -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap" type="text/css">
-<link rel="stylesheet" href="/TimeForMaker/assets/css/fontawesome.min.css" type="text/css">
+<link rel="stylesheet" href="<%=contextPath %>/assets/css/fontawesome.min.css" type="text/css">
 
 <!-- load script -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
@@ -363,7 +363,7 @@
 	    /* 게시판에 빈 라인 hover삭제 */
 	    $("#recept-board-area tbody tr").hover(function(){
 	        if($(this).children("th").text()!=""){
-	            $(this).css("background-color","beige");
+	            $(this).css("background-color","#F7F0D4");
 	        }
 	    }, function(){
 	        $(this).css("background-color","transparent");
@@ -374,6 +374,10 @@
 	        if($(this).text()==""){
 	            $("#recept-board-area tbody tr").eq(index).css("border","white");
 	            if(index==4){
+	                $("#recept-board-area tbody tr").eq(index).css("border-bottom","black");
+	            }
+	        }else{
+	        	if(index==4){
 	                $("#recept-board-area tbody tr").eq(index).css("border-bottom","black");
 	            }
 	        }

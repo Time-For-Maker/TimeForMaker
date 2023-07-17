@@ -20,15 +20,15 @@ public class NoticeService {
 	}
 	
 	// 로그인 임의 생성
-	public Member login() {
-		Connection conn = getConnection();
-		
-		Member m = new NoticeDao().login(conn);
-		
-		close(conn);
-		
-		return m;
-	}
+//	public Member login() {
+//		Connection conn = getConnection();
+//		
+//		Member m = new NoticeDao().login(conn);
+//		
+//		close(conn);
+//		
+//		return m;
+//	}
 	
 	public ArrayList<Notice> selectAllUploadedNotice(){
 		Connection conn = getConnection();

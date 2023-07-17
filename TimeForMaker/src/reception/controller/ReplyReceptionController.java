@@ -43,9 +43,7 @@ public class ReplyReceptionController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json; charset=UTF-8");
 		String no = request.getParameter("no");
-		String text = request.getParameter("text");
-		System.out.println(no);
-		System.out.println(text);
+		String text = request.getParameter("text").replaceAll("\r\n", "<br>");
 		String resData;
 		
 		Reception reply = new Reception();

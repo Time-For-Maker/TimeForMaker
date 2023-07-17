@@ -39,7 +39,6 @@ public class ManageReceptionController extends HttpServlet {
 		String status = request.getParameter("status")==null?"대기":request.getParameter("status");
 		int currentPage = request.getParameter("page")==null?1:Integer.parseInt(request.getParameter("page"));
 		
-		System.out.println(category + " " + status);
 		
 		int listCount=0;
 		
@@ -61,8 +60,6 @@ public class ManageReceptionController extends HttpServlet {
 		case "전체" : list = new ReceptionService().selectAllMemberReceptionList(pi, status); break;
 		case "계정" : case "예약" : case "기타" : list = new ReceptionService().selectMemberReceptionList(pi, category, status); break;
 		}
-		System.out.println("listcount : "+listCount);
-		System.out.println("list==null? "+(list==null));
 		
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);

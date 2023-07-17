@@ -52,7 +52,6 @@ public class UploadNoticeController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// String no = request.getParameter("no");
-		System.out.println("서블릿 접속");
 		String no = request.getParameter("notice-form-no").isEmpty()?null:request.getParameter("notice-form-no");
 		char agree = request.getParameter("notice-form-agree-hdn").charAt(0);
 		String title = request.getParameter("notice-form-title");
@@ -94,9 +93,9 @@ public class UploadNoticeController extends HttpServlet {
 			}
 		}else {
 			if(save=='Y') {
-				request.setAttribute("msg", "작성하신 글을 저장하는 데 실패하였습니다. 다시 시도해주세요.");
+				request.setAttribute("msg", "다시 저장해주세요.");
 			}else {
-				request.setAttribute("msg", "작성하신 글을 등록하는 데 실패하였습니다. 다시 시도해주세요.");
+				request.setAttribute("msg", "다시 등록해주세요.");
 			}
 			request.getRequestDispatcher("views/manager/noticeEnrollForm.jsp").forward(request, response);
 //				response.sendRedirect("views/manager/saveNoticeBoard");

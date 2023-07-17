@@ -172,7 +172,6 @@ public class ReceptionDao {
 			close(rset);
 			close(pstmt);
 		}
-		System.out.println("dao recp_no : "+result.getReceptionNo());
 		return result;
 	}
 	
@@ -316,7 +315,6 @@ public class ReceptionDao {
 											rset.getInt("r"), rset.getString("status"));
 				re.setReceptionNo(rset.getString("reception_no"));
 				list.add(re);
-				System.out.println("dao : "+re.getReceptionNo());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -13,6 +13,7 @@ import common.model.vo.Member;
 import common.model.vo.PageInfo;
 import notice.model.vo.Notice;
 import notice.service.NoticeService;
+import reception.service.ReceptionService;
 
 /**
  * Servlet implementation class NoticeListController
@@ -59,14 +60,7 @@ public class NoticeBoardController extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
-//		System.out.print("keyword is null? : ");
-//		System.out.println(keyword==null);
-//		System.out.println(keyword!=null);
-//		System.out.println("keyword : "+keyword);
-//		System.out.println("keyword == ' '"+keyword==" ");
-//		if(keyword!=null) {
-//			System.out.println("keyword len" + keyword.length());
-//		}
+
 		/* 조회결과에서 시작~끝 범위에 해당하는 공지만 셀렉해옴 */
 		if(category=="전체"|| (category != "전체" && keyword.length()==0)) {
 			System.out.println("키워드 null임");
@@ -80,9 +74,9 @@ public class NoticeBoardController extends HttpServlet {
 		}
 		
 		/* 임의로 로그인 멤버 지정 */
-		 Member m = new NoticeService().login();
-		 request.getSession().setAttribute("loginUser", m);
-		 System.out.println(m.getUserId()); System.out.println(m.getManagerType());
+//		 Member m = new NoticeService().login();
+//		 request.getSession().setAttribute("loginUser", m);
+//		 System.out.println(m.getUserId()); System.out.println(m.getManagerType());
 		/* --------------------- */
 		
 		request.setAttribute("pi", pi);

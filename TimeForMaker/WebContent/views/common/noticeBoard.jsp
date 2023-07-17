@@ -240,7 +240,7 @@
             <div class="row">
 
                 <div class="col-md-4 pt-5">
-                    <img src="../assets/img/메인로고.png" class="main_logo">
+                    <img src="<%=contextPath %>/assets/img/메인로고.png" class="main_logo">
                     <ul class="list-unstyled text-light footer-link-list">
                         <li>
                             <i class="fas fa-map-marker-alt fa-fw"></i>
@@ -284,7 +284,7 @@
         /* 게시판에 빈 라인 hover삭제 */
         $("#notice-board-area tbody tr").hover(function(){
             if($(this).children("th").text()!=""){
-                $(this).css("background-color","beige");
+                $(this).css("background-color","#F7F0D4");
             }
         }, function(){
             if($(this).hasClass("important-notice")){
@@ -301,7 +301,6 @@
                 if(index==9){
                     $("#notice-board-area tbody tr").eq(index).css("border-bottom","black");
                 }
-                // console.log(index, element, $(this).text());
             }
         });
         

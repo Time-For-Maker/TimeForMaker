@@ -26,28 +26,28 @@ public class NoticeDao {
 		}
 	}
 	
-	public Member login(Connection conn) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String sql = prop.getProperty("login");
-		
-		Member m = null;
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				m=new Member(rset.getString("user_id"), rset.getString("manager_type"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(rset);
-			close(pstmt);
-		}
-		return m;
-	}
+//	public Member login(Connection conn) {
+//		PreparedStatement pstmt = null;
+//		ResultSet rset = null;
+//		String sql = prop.getProperty("login");
+//		
+//		Member m = null;
+//		
+//		try {
+//			pstmt = conn.prepareStatement(sql);
+//			rset = pstmt.executeQuery();
+//			
+//			while(rset.next()) {
+//				m=new Member(rset.getString("user_id"), rset.getString("manager_type"));
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}finally {
+//			close(rset);
+//			close(pstmt);
+//		}
+//		return m;
+//	}
 	
 	public ArrayList<Notice> selectAllUploadedNotice(Connection conn){
 		PreparedStatement pstmt = null;
