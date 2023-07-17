@@ -5,8 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="" type="text/css"> <!-- /TimeForMaker/assets/css/test.css -->
 </head>
 <body>
-
+	<button onclick="location.href='noticeBoard'">click</button>
 </body>
 </html>

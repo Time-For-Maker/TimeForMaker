@@ -1,23 +1,31 @@
-package controller;
+package reception.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import reception.model.vo.Reception;
+import reception.model.vo.ReceptionFile;
+import reception.service.ReceptionService;
+
 /**
- * Servlet implementation class TestController
+ * Servlet implementation class ReceptionController
+ * 
+ * 관리자 페이지
+ * -회원 문의글 상세보기
  */
-@WebServlet("/TestController")
-public class TestController extends HttpServlet {
+@WebServlet("/reception")
+public class ReceptionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TestController() {
+    public ReceptionController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,8 +34,14 @@ public class TestController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String no = request.getParameter("no");
+		
+		Reception r = new ReceptionService().selectMemberReception(no);
+		ReceptionFile rfile = new ReceptionService().selectMemberReceptionFile(no);
+		
+		request.setAttribute("r", r);
+		request.setAttribute("rfile", rfile);
+		request.getRequestDispatcher("views/manager/ManagerReceptionDetail.jsp").forward(request, response);
 	}
 
 	/**
