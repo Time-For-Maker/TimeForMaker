@@ -180,7 +180,7 @@
 
             <nav id="notice-recept-board-navi" aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
-                <% if(maxPage != pageLimit) { %>
+                <% if(maxPage > pageLimit) { %> <!-- != -->
 	                  <li class="page-item notice-page-pre">
 	                  	<% if(startPage != 1){ %>
 	                  		<a class="page-link" href="<%=contextPath%>/noticeBoard?page=<%=startPage-pageLimit%>$category=<%=category %>&keyword=<%=keyword %>" aria-label="Previous">
@@ -203,7 +203,7 @@
 		              	<% } %>
 	              <% } %>
                   
-                  <% if(maxPage != pageLimit) { %>
+                  <% if(maxPage > pageLimit) { %>
 	                  <li class="page-item">
 	                  <% if(endPage == maxPage){ %>
 	                    <a class="page-link notice-page-next" aria-label="Next" onclick="return false;">
@@ -305,8 +305,8 @@
         });
         
         /* 공지사항 게시판 페이징 버튼 효과 */
-        $(".page-item").click(function(){
-        	if(!($(this).hasClass("notice-page-pre") || $(this).hasClass("notice-page-next"))){
+        $(".page-item").click(function(){ /* 수정됨 */
+        	if(!($(this).children().hasClass("notice-page-next")||$(this).children().hasClass("notice-page-pre"))){
 	            $(this).siblings().removeClass("notice-recept-page-clicked");
 	            $(this).addClass("notice-recept-page-clicked"); 
         	}

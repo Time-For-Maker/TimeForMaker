@@ -74,9 +74,9 @@ public class NoticeBoardController extends HttpServlet {
 		}
 		
 		/* 임의로 로그인 멤버 지정 */
-//		 Member m = new NoticeService().login();
-//		 request.getSession().setAttribute("loginUser", m);
-//		 System.out.println(m.getUserId()); System.out.println(m.getManagerType());
+		 Member m = new NoticeService().login();
+		 request.getSession().setAttribute("loginUser", m);
+		 System.out.println(m.getUserId()); System.out.println(m.getManagerType());
 		/* --------------------- */
 		
 		request.setAttribute("pi", pi);
