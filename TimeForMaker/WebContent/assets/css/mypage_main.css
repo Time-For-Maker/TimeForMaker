@@ -51,7 +51,7 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  background-image: url(../img/pens-525287_1280.jpg);
+  background-image: url(../img/마이페이지배너2.png);
   background-size : cover;
 
 
@@ -97,9 +97,9 @@
 
 /* 방문 예정 리스트 시작 */
 .mypage-appointment-list-wrapper{
-    /* border: 1px solid rgb(28, 55, 211); */
+  /*   border: 1px solid rgb(28, 55, 211); */
     box-sizing: border-box;
-    width: 100%;
+    width: 50%;
     height: 100%;
     /* display: flex; */
     justify-content: center;
@@ -492,8 +492,9 @@ margin: 0 auto;
   margin-top: -7px; */
   margin: -7px 10px 10px ;
   padding-left: 5px;
-  font-size: 10px;
-  color: #f7e8ad;
+  font-size: 13px;
+  font-weight: 400;
+  color: purple;
   border: 1px solid lightgray;
   border-radius: 5px;
   
