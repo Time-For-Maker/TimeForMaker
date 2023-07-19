@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 /*
 관리자 헤드, 푸터 Css
 */
@@ -12,9 +14,6 @@
 }
 .main_logo{
     width: 60%;
-}
-.main_footer{
-    background-color: #FAF0E4;/*푸터 배경색*/
 }
 .admin_header{
     display: flex;

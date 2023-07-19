@@ -1,7 +1,7 @@
 /* SEARCH_CONDITION */
 .reservation_content{
-    background-color: #f7e8ad;
-    width: 100%; height: 2100%;
+    background-color: #ffffff;
+    width: 100%; height: 100%;
 }
 .search_head_title{
     box-sizing: border-box;
@@ -12,6 +12,7 @@
 }
 .search_condition{
     box-sizing: border-box;
+    border: 4px double #FF8551;
     background-color: white;
     width: 60%;
     height: 150px;
@@ -31,12 +32,12 @@
     height: 30px;
     width: 150px;
 }
-#search_keyword,#search_keyword_content{
+#search_reservation_no{
     box-sizing: border-box;
     height: 30px;
 }
-#search_keyword_content{
-    width: 220px;
+#search_reservation_no{
+    width: 330px;
 }
 #search_value_btn{
     box-sizing: border-box;
@@ -47,7 +48,7 @@
     font-weight: 800;
     float: right;
     position: relative;
-    top:-125px; right: 50px;
+    top:-130px; right: -130px;
 }
 #search_value_btn:hover{
     background-color: #FAF0E4;
@@ -61,6 +62,10 @@
     padding-top: 40px;
     padding-bottom: 8px;
 }
+#search_result_table thead{
+    box-sizing: border-box;
+    transform: translateY(-6px)
+}
 #new_register_btn{
     background-color: #f7e8ad;
     border: 1px solid gray;
@@ -71,8 +76,8 @@
     border-radius: 10px;
     float: right;
     position: relative;
-    right: -100px;
-    top: -10px;
+    right: -320px;
+    top: -35px;
 }
 #new_register_btn:hover{
     background-color: #FAF0E4;
@@ -80,9 +85,10 @@
 }
 .search_result{
     box-sizing: border-box;
+    border: 4px double #FF8551;
     background-color: white;
     width: 60%;
-    height: 330px;
+    height: 500px;
     margin: auto;
 }
 .search_list_area{
@@ -122,7 +128,25 @@
     color: gray;
     background-color: #FAF0E4;
 }
-#result_accept,#result_modify,#result_delete{
+
+.button-container{
+	box-sizing:border-box;
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100px;
+    margin: 0 auto;
+}
+.button-container button {
+    box-sizing: border-box;
+    border: 1px solid gray;
+    border-radius: 5px;
+    background-color: #f7e8ad;
+    font-size: 12px; flex-grow: 1;
+    margin: 0 5px; 
+}
+
+#result_accept,#result_delete{
     box-sizing: border-box;
     border: 1px solid gray;
     border-radius: 5px;
@@ -135,8 +159,8 @@
 }
 
 /* PAGING-BAR */
-.paging-area button{
-    box-sizing: border-box;
-    border: 1px solid gray;
-    background-color: #f7e8ad;
-}
+/* .paging-area button{ */
+/*     box-sizing: border-box; */
+/*     border: 1px solid gray; */
+/*     background-color: #f7e8ad; */
+/* } */
