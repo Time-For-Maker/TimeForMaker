@@ -73,7 +73,7 @@
                     </div>
                     <button class="btn btn-primary notice-form-delete-btn" type="submit" formaction="deleteNotice">삭제하기</button>
                     <button class="btn btn-primary notice-form-save-btn" type="submit" formaction="uploadNotice" name="save" value="Y">임시저장</button>
-                    <button class="btn btn-primary notice-form-btn" type="submit" formaction="uploadNotice" name="save" value="N">접수하기</button>
+                    <button class="btn btn-primary notice-form-btn" type="submit" formaction="uploadNotice" name="save" value="N">등록하기</button>
                     <!-- 
                         공지 접수 성공 여부에 따라 알림창 다르게 뜨게 만드는 기능 추가 필요
                         (서버로 폼 제출 -> 컨트롤에서 결과에 따라 폼 작성창에 작성했던 내용 + 알림창)

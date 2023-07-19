@@ -85,7 +85,7 @@
                     </div>
                     
                     <div class="manager-recept-selectBox">
-                        <span>접수상태</span>
+                        <span>처리상태</span>
                         <div class="manager-select-btn">
                             <button class="manager-select-label"><%=status %></button>
                             <ul class="manager-select-optionList">
