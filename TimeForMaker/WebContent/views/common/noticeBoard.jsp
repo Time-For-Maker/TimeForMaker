@@ -181,13 +181,13 @@
             <nav id="notice-recept-board-navi" aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
                 <% if(maxPage > pageLimit) { %> <!-- != -->
-	                  <li class="page-item notice-page-pre">
+	                  <li class="page-item">
 	                  	<% if(startPage != 1){ %>
-	                  		<a class="page-link" href="<%=contextPath%>/noticeBoard?page=<%=startPage-pageLimit%>$category=<%=category %>&keyword=<%=keyword %>" aria-label="Previous">
+	                  		<a class="page-link notice-page-pre" href="<%=contextPath%>/noticeBoard?page=<%=startPage-pageLimit%>$category=<%=category %>&keyword=<%=keyword %>" aria-label="Previous">
 		                    	<span aria-hidden="true">&laquo;</span>
 		                    </a>
 	                    <% }else{ %>
-	                    	<a class="page-link" aria-label="Previous" onclick="return false;">
+	                    	<a class="page-link notice-page-pre" aria-label="Previous" onclick="return false;">
 		                    	<span aria-hidden="true">&laquo;</span>
 		                    </a>
 	                    <% } %>

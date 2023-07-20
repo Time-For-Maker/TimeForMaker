@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 	<entry key="login">
-		select * from member where user_id='admin@admin.com'  <!-- admin@admin.com test@test.com -->
+		select * from member where user_id='test@test.com'  <!-- admin@admin.com test@test.com -->
 	</entry>
 	
 	<entry key="selectAllUploadedNotice">

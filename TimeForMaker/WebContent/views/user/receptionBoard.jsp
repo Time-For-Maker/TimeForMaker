@@ -152,14 +152,14 @@
         
                     <nav id="notice-recept-board-navi" aria-label="Page navigation">
 		                <ul class="pagination justify-content-center">
-		                <% if(maxPage != pageLimit) { %>
-			                  <li class="page-item notice-page-pre">
+		                <% if(maxPage > pageLimit) { %>
+			                  <li class="page-item">
 			                  	<% if(startPage != 1){ %>
-			                  		<a class="page-link" href="<%=contextPath%>/myReception?page=<%=startPage-pageLimit%>" aria-label="Previous">
+			                  		<a class="page-link notice-page-pre" href="<%=contextPath%>/myReception?page=<%=startPage-pageLimit%>" aria-label="Previous">
 				                    	<span aria-hidden="true">&laquo;</span>
 				                    </a>
 			                    <% }else{ %>
-			                    	<a class="page-link" aria-label="Previous" onclick="return false;">
+			                    	<a class="page-link notice-page-pre" aria-label="Previous" onclick="return false;">
 				                    	<span aria-hidden="true">&laquo;</span>
 				                    </a>
 			                    <% } %>
@@ -175,7 +175,7 @@
 			              	<% } %>
 			              <% } %>
 		                  
-		                  <% if(maxPage != pageLimit) { %>
+		                  <% if(maxPage > pageLimit) { %>
 			                  <li class="page-item">
 			                  <% if(endPage == maxPage){ %>
 			                    <a class="page-link notice-page-next" aria-label="Next" onclick="return false;">
@@ -353,11 +353,13 @@
 	        $("#recept-form-category").val(value);
 	    });
 	
-	    /* 공지사항 게시판 페이징 버튼 효과 */
+	    /* 공지사항 게시판 페이징 버튼 효과 -수정됨 */
 	    $(".page-item").click(function(){
-	        $(this).siblings().removeClass("notice-recept-page-clicked");
-	        $(this).addClass("notice-recept-page-clicked"); 
-	        console.log(this.classList);
+	    	if(!($(this).children().hasClass("notice-page-next")||$(this).children().hasClass("notice-page-pre"))){
+	    		$(this).siblings().removeClass("notice-recept-page-clicked");
+	       		$(this).addClass("notice-recept-page-clicked"); 
+	    	}
+	        
 	    });
 	
 	    /* 게시판에 빈 라인 hover삭제 */
